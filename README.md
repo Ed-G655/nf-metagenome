@@ -32,17 +32,17 @@ Compatible OS\*:
 
 ### Software
 
-+----------------------------------------------------------------------+----------+----------------------+
-| Requierment                                                          | Version  | Required Commands \* |
-+======================================================================+==========+======================+
-| Java                                                                 | v11.0.11 | java                 |
-+----------------------------------------------------------------------+----------+----------------------+
-| Nextflow                                                             | 21.10.5  | nextflow run         |
-+----------------------------------------------------------------------+----------+----------------------+
-| Docker                                                               | 20.10.11 | pull, build          |
-+----------------------------------------------------------------------+----------+----------------------+
-| [Quast docker image](https://quay.io/repository/biocontainers/quast) |          |                      |
-+----------------------------------------------------------------------+----------+----------------------+
++----------------------------------------------------------------------+--------------+----------------------+
+| Requierment                                                          | Version      | Required Commands \* |
++======================================================================+==============+======================+
+| Java                                                                 | v11.0.11     | java                 |
++----------------------------------------------------------------------+--------------+----------------------+
+| Nextflow                                                             | 21.10.5      | nextflow run         |
++----------------------------------------------------------------------+--------------+----------------------+
+| Docker                                                               | 20.10.11     | pull, build          |
++----------------------------------------------------------------------+--------------+----------------------+
+| [Quast docker image](https://quay.io/repository/biocontainers/quast) | v2.2         | -                    |
++----------------------------------------------------------------------+--------------+----------------------+
 
 -   These commands must be accessible from your \$PATH (i.e. you should be able to invoke them from your command line). \*\* Plan9 port builds many binaries, but you ONLY need the mk utility to be accessible from your command line.
 
@@ -86,8 +86,8 @@ To run with your own data go to the pipeline directory and execute:
       -resume \
       -with-report $your_output_directory/`date +%Y%m%d_%H%M%S`_report.html \
       -with-dag $your_output_directory/`date +%Y%m%d_%H%M%S`.DAG.html \
-    	-with-timeline $your_output_directory/`date +%Y%m%d_%H%M%S`_timeline.html \
-    	-with-docker
+        -with-timeline $your_output_directory/`date +%Y%m%d_%H%M%S`_timeline.html \
+        -with-docker
 
 ### Important
 
