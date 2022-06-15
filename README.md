@@ -41,7 +41,7 @@ Compatible OS\*:
 +----------------------------------------------------------------------+--------------+----------------------+
 | Docker                                                               | 20.10.11     | pull, build          |
 +----------------------------------------------------------------------+--------------+----------------------+
-| [Quast docker image](https://quay.io/repository/biocontainers/quast) | v2.2         | -                    |
+| [Quast docker image](https://quay.io/repository/biocontainers/quast) | v2.2         |                      |
 +----------------------------------------------------------------------+--------------+----------------------+
 
 -   These commands must be accessible from your \$PATH (i.e. you should be able to invoke them from your command line). \*\* Plan9 port builds many binaries, but you ONLY need the mk utility to be accessible from your command line.
