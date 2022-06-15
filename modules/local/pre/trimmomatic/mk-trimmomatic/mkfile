@@ -1,0 +1,20 @@
+MKSHELL=/bin/bash
+
+# Pre-process reads.
+# ====================
+# Pre-process PAIRED END reads from a pair of compressed fastq file.
+#
+%.trimreport.txt:Q: %_R1.fastq.gz %_R2.fastq.gz
+	echo "[DEBUG] trimm reads from $prereq"
+	java -jar trimmomatic-0.39.jar \
+		PE \
+		-trimlog $stem.trimlog.txt \
+		$prereq \
+		$stem'_paired_trim_1.fq.gz' \
+		$stem'_unpaired_trim_f.fq.gz' \
+		$stem'_paired_trim_2.fq.gz' \
+		$stem'_unpaired_trim_r.fq.gz' \
+		ILLUMINACLIP:TruSeq3-PE.fa:2:30:10:2:keepBothReads \
+		AVGQUAL:$TRIM_AVGQUAL \
+		TRAILING:$TRIM_TRAILING \
+		MINLEN:$TRIM_MINLEN 2> $target
