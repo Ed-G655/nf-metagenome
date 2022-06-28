@@ -109,6 +109,10 @@ RUN apt-get update && apt-get install -y \
   libncurses5-dev \
   zlib1g-dev
 
-#Install metabat2
-RUN wget https://bitbucket.org/berkeleylab/metabat/get/master.tar.gz
-RUN tar xzvf master.tar.gz && cd berkeleylab-metabat-*
+# #Install maxbin
+#
+# RUN cpanm LWP
+# RUN cpanm FindBin
+# RUN git clone https://git.code.sf.net/p/maxbin/code maxbin-code
+# RUN cd maxbin-code && cd src && make && cd ..
+# RUN bash ./autobuild_auxiliary
