@@ -63,7 +63,7 @@ process MEGAHIT {
 
 	output:
   path "MEGAHIT/*"
-	tuple val(Sample_name), file( "MEGAHIT/${Sample_name}*.fa"), emit: assembly_megahit
+	tuple val(Sample_name), file( "MEGAHIT/${Sample_name}megahit*.fa"), emit: assembly_megahit
 
 	shell:
 	"""
@@ -71,7 +71,7 @@ process MEGAHIT {
 	echo "[DEBUG] Performing PE assembly with files ${Sample_file}"
 
 	megahit 	 -o MEGAHIT \
-						 --out-prefix "${Sample_name}" \
+						 --out-prefix "${Sample_name}megahit" \
 						 -1 ${Sample_name}R1.fastq.gz \
              -2 ${Sample_name}R2.fastq.gz \
              -t $task.cpus \

@@ -6,7 +6,7 @@
 
 ================================================================
 
-This module perform bowtie2 aligment
+This module evaluate genome assembly with metaQUAST
 
 ==================================================================
 Version: 0.1
@@ -51,37 +51,31 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 ========================================================================================
 */
 
-/* METASPADES */
+/* MAXBIN2 */
 
-process METASPADES {
+process MAXBIN2 {
+	container 'flowcraft/maxbin2:2.2.6-1'
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/metaspades/",mode:"copy"
+	publishDir "${results_dir}/maxbin2/",mode:"copy"
 
 	input:
 	tuple val(Sample_name), file( Sample_file)
+	tuple val(Sample_name), file(Contig)
 
 	output:
- 	path "${Sample_name}metaspades/*"
-	tuple val(Sample_name), file( "${Sample_name}metaspades/${Sample_name}metaspades.fasta"), emit: assembly_metaspades
+ 	path "*"
 
 	shell:
 	"""
 
-	echo "[DEBUG] Performing PE assembly with files ${Sample_file}"
+	echo "[DEBUG] Generate bins from metagenomic samples with MaxBin2 "
 
-	spades.py --meta \
-            -o "${Sample_name}metaspades" \
-            -1 ${Sample_name}R1.fastq.gz \
-            -2 ${Sample_name}R2.fastq.gz \
-            -t $task.cpus
-	cp ${Sample_name}metaspades/contigs.fasta ${Sample_name}metaspades/${Sample_name}metaspades.fasta
-
-
+	run_MaxBin.pl -contig $Contig \
+								-reads ${Sample_name}R1.fastq.gz \
+                -reads2 ${Sample_name}R2.fastq.gz \
+								-out "$Sample_name" \
+                -thread $task.cpus
 	"""
 
 }
-
-//samtools bam2fq ${Sample_name}sorted.bam > ${Sample_name}.fastq
-
-//echo "[DEBUG] split paired-end reads into separated fastq files"

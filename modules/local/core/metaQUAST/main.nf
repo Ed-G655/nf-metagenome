@@ -60,7 +60,7 @@ process METAQUAST {
 	publishDir "${results_dir}/metaQUAST/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(Sample_file)
+	tuple val(Sample_name), file(Megahit_contig),  file(Metaspades_contig)
 
 	output:
  	path "*"
@@ -68,9 +68,9 @@ process METAQUAST {
 	shell:
 	"""
 
-	echo "[DEBUG] evaluate genome assembly with metaQUAST: ${Sample_file}"
+	echo "[DEBUG] evaluate genome assembly with metaQUAST:  $Megahit_contig $Metaspades_contig"
 
-	metaquast.py $Sample_file -o $params.tool/$Sample_name --threads $task.cpus --min-contig 50
+	metaquast.py $Megahit_contig $Metaspades_contig -o $Sample_name --threads $task.cpus --min-contig 50
 
 	"""
 
