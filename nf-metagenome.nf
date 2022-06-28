@@ -273,8 +273,11 @@ include {	BAM_TO_FASTQ	} from './modules/local/pre/BAM_to_FASTQ/main.nf'
 								/* CORE-processing */
 include {	METASPADES	} from './modules/local/core/metaspades/main.nf'
 include {	MEGAHIT	} from './modules/local/core/megahit/main.nf'
-include {	METAQUAST	as METAQUAST_MEGAHIT } from './modules/local/core/metaQUAST/main.nf'  addParams(tool: "MEGAHIT")
+include {	METAQUAST } from './modules/local/core/metaQUAST/main.nf'
 include {	METAQUAST	as METAQUAST_METASPADES } from './modules/local/core/metaQUAST/main.nf'  addParams(tool: "METASPADES")
+include {	MAXBIN2 } from './modules/local/core/maxbin2/main.nf'
+include {	METABAT2 } from './modules/local/core/metabat2/main.nf'
+
 /*
 ========================================================================================
     											RUN MAIN WORKFLOW
@@ -319,7 +322,13 @@ workflow  {
 			// CORE2-MEGAHIT: Metagenomic assembly using MEGAHIT-1.2.9
 				MEGAHIT(HOST_REMOVED_FQ)
 
+			//	Join assemblies into one channel
+				ASSEMBLIES = MEGAHIT.out.assembly_megahit.join(METASPADES.out.assembly_metaspades)
+
 			// CORE3-METAQUAST: evaluate genome assembly with metaQUAST
-				METAQUAST_MEGAHIT(MEGAHIT.out.assembly_megahit)
-				METAQUAST_METASPADES(METASPADES.out.assembly_metaspades)
+				METAQUAST(ASSEMBLIES)
+			// MAX bin
+			//	MAXBIN2(HOST_REMOVED_FQ, MEGAHIT.out.assembly_megahit)
+			// METABAT2
+			//	METABAT2(MEGAHIT.out.assembly_megahit)
 }
