@@ -6,7 +6,7 @@
 
 ================================================================
 
-This module evaluate genome assembly with metaQUAST
+This module perform bowtie2 aligment
 
 ==================================================================
 Version: 0.1
@@ -51,28 +51,30 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 ========================================================================================
 */
 
-/* MAXBIN2 */
+/* ASSEMBLY_COVERAGE */
 
-process METABAT2 {
-	container 'metabat/metabat'
+process ASSEMBLY_COVERAGE  {
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/metabat2/",mode:"copy"
-
+	publishDir "${results_dir}/assembly_coverage/", mode:"copy"
 	input:
 	tuple val(Sample_name), file(Contig)
-	tuple val(Sample_name), file(BAM)
+	tuple val(Sample_name), file( Sample_file)
 
 	output:
- 	path "*"
+	tuple val(Sample_name), file("*.{bam,bai}") 
 
 	shell:
-	"""
-
-	echo "[DEBUG] Generate bins from metagenomic samples with METABAT2 "
-
-	runMetaBat.sh -m 1500 -t $task.cpus ${Contig} ${Sample_name}.bam
 
 	"""
+	echo "Build index from CONTIG: ${Contig}"
+	bowtie2-build ${Contig} final.contigs --threads $task.cpus
 
+	echo "Aligning reads to index and write BAM file"
+	bowtie2 -x final.contigs -1 ${Sample_name}R1.fastq.gz -2 ${Sample_name}R2.fastq.gz | \
+	samtools view -bS -o ${Sample_name}to_sort.bam
+	samtools sort ${Sample_name}to_sort.bam -o ${Sample_name}.bam
+	samtools index ${Sample_name}.bam
+
+	"""
 }

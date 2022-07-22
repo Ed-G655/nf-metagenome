@@ -70,7 +70,7 @@ process METAQUAST {
 
 	echo "[DEBUG] evaluate genome assembly with metaQUAST:  $Megahit_contig $Metaspades_contig"
 
-	metaquast.py $Megahit_contig $Metaspades_contig -o $Sample_name --threads $task.cpus --min-contig 50
+	metaquast.py $Megahit_contig $Metaspades_contig -o $Sample_name --threads $task.cpus
 
 	"""
 

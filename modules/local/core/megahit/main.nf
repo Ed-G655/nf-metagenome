@@ -76,6 +76,7 @@ process MEGAHIT {
              -2 ${Sample_name}R2.fastq.gz \
              -t $task.cpus \
 						 --presets meta-large
+
 	"""
 
 }

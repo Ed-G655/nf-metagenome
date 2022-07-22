@@ -6,7 +6,7 @@
 
 ================================================================
 
-This module evaluate genome assembly with metaQUAST
+This module perform bowtie2 aligment
 
 ==================================================================
 Version: 0.1
@@ -51,27 +51,25 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 ========================================================================================
 */
 
-/* MAXBIN2 */
+/* MEGAHIT */
 
-process METABAT2 {
-	container 'metabat/metabat'
+process ZIP_CONTIG {
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/metabat2/",mode:"copy"
+	publishDir "${results_dir}/megahit/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(Contig)
-	tuple val(Sample_name), file(BAM)
+	tuple val(Sample_name), file( Sample_file)
 
 	output:
- 	path "*"
+	tuple val(Sample_name), file( "*.gz")
 
 	shell:
 	"""
 
-	echo "[DEBUG] Generate bins from metagenomic samples with METABAT2 "
+	echo "[DEBUG] Zip contig files ${Sample_file}"
 
-	runMetaBat.sh -m 1500 -t $task.cpus ${Contig} ${Sample_name}.bam
+	bgzip -c ${Sample_file} > ${Sample_file}.gz
 
 	"""
 
