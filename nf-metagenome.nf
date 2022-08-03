@@ -345,5 +345,5 @@ workflow  {
 				METABAT_METASPADES(METASPADES.out.assembly_metaspades, METASPADES_COVERAGE.out)
 				 //CONCOCT
 				 CONCOCT_MEGAHIT(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
-				 CONCOCT_METASPADES(METASPADES.out.assembly_megahit, METASPADES_COVERAGE.out)
+				 CONCOCT_METASPADES(METASPADES.out.assembly_metaspades, METASPADES_COVERAGE.out)
 }
