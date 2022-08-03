@@ -282,6 +282,8 @@ include {	ASSEMBLY_COVERAGE as METASPADES_COVERAGE } from './modules/local/core/
 include {	METABAT2 as METABAT_MEGAHIT} from './modules/local/core/metabat2/main.nf'
 include {	METABAT2 as METABAT_METASPADES} from './modules/local/core/metabat2/main.nf'
 include { CONCOCT as CONCOCT_MEGAHIT } from './modules/local/core/concoct/main.nf'
+include { CONCOCT as CONCOCT_METASPADES } from './modules/local/core/concoct/main.nf'
+
 /*
 ========================================================================================
     											RUN MAIN WORKFLOW
@@ -343,5 +345,5 @@ workflow  {
 				METABAT_METASPADES(METASPADES.out.assembly_metaspades, METASPADES_COVERAGE.out)
 				 //CONCOCT
 				 CONCOCT_MEGAHIT(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
-				 CONCOCT_MEGAHIT(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
+				 CONCOCT_METASPADES(METASPADES.out.assembly_megahit, METASPADES_COVERAGE.out)
 }
