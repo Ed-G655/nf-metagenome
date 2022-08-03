@@ -278,8 +278,10 @@ include {	METAQUAST	as METAQUAST_METASPADES } from './modules/local/core/metaQUA
 include {	MAXBIN2 } from './modules/local/core/maxbin2/main.nf'
 include {	ZIP_CONTIG } from './modules/local/core/zip_contig/main.nf'
 include {	ASSEMBLY_COVERAGE as MEGAHIT_COVERAGE } from './modules/local/core/assembly_coverage/main.nf'
-include {	METABAT2 } from './modules/local/core/metabat2/main.nf'
-
+include {	ASSEMBLY_COVERAGE as METASPADES_COVERAGE } from './modules/local/core/assembly_coverage/main.nf'
+include {	METABAT2 as METABAT_MEGAHIT} from './modules/local/core/metabat2/main.nf'
+include {	METABAT2 as METABAT_METASPADES} from './modules/local/core/metabat2/main.nf'
+include { CONCOCT as CONCOCT_MEGAHIT } from './modules/local/core/concoct/main.nf'
 /*
 ========================================================================================
     											RUN MAIN WORKFLOW
@@ -328,13 +330,18 @@ workflow  {
 				ASSEMBLIES = MEGAHIT.out.assembly_megahit.join(METASPADES.out.assembly_metaspades)
 
 			// CORE3-METAQUAST: evaluate genome assembly with metaQUAST
-			//	METAQUAST(ASSEMBLIES)
+			  METAQUAST(ASSEMBLIES)
 			// ASSEMBLY_COVERAGE
 				MEGAHIT_COVERAGE(MEGAHIT.out.assembly_megahit, HOST_REMOVED_FQ)
+			  METASPADES_COVERAGE(METASPADES.out.assembly_metaspades, HOST_REMOVED_FQ)
 			// MAX bin
-			//	MAXBIN2(HOST_REMOVED_FQ, MEGAHIT.out.assembly_megahit)
+				// MAXBIN2(HOST_REMOVED_FQ, MEGAHIT.out.assembly_megahit)
 			// ZIP CONTIGS
 			// 	ZIP_CONTIG(MEGAHIT.out.assembly_megahit)
 			// // METABAT2
-			   METABAT2(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
+			  METABAT_MEGAHIT(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
+				METABAT_METASPADES(METASPADES.out.assembly_metaspades, METASPADES_COVERAGE.out)
+				 //CONCOCT
+				 CONCOCT_MEGAHIT(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
+				 CONCOCT_MEGAHIT(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
 }
