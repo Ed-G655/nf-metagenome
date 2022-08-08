@@ -1,7 +1,7 @@
 cd ..
 
-fastq_dir="/home/jgarcia/metagenome-data/"
-output_directory="./results"
+fastq_dir="/bodega/projects/metagenome_pipeline/data"
+output_directory="/bodega/projects/metagenome_pipeline/results"
 
 echo -e "======\n Testing NF execution \n======" \
 && rm -rf $output_directory \
