@@ -72,10 +72,11 @@ process MAXBIN2 {
 	echo "[DEBUG] Generate bins from metagenomic samples with MaxBin2 "
 
 	run_MaxBin.pl -contig $Contig \
+								-thread $task.cpus \
 								-reads ${Sample_name}R1.fastq.gz \
                 -reads2 ${Sample_name}R2.fastq.gz \
-								-out "$Sample_name" \
-                -thread $task.cpus
+								-out $Sample_name
+
 	"""
 
 }
