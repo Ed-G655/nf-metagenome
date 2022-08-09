@@ -116,3 +116,11 @@ RUN apt-get update && apt-get install -y \
 # RUN git clone https://git.code.sf.net/p/maxbin/code maxbin-code
 # RUN cd maxbin-code && cd src && make && cd ..
 # RUN bash ./autobuild_auxiliary
+#
+# ## Install checkM
+# RUN pip install numpy matplotlib pysam checkm-genome
+#
+# # Download checkM database TO SLOW Download
+# RUN wget --no-check-certificate https://data.ace.uq.edu.au/public/CheckM_databases/checkm_data_2015_01_16.tar.gz
+# RUN  mkdir -p /checkm_database && tar xzf checkm_data_2015_01_16.tar.gz -C /checkm_database
+# RUN echo /checkm_database | checkm data setRoot /

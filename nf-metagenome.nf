@@ -337,7 +337,7 @@ workflow  {
 				MEGAHIT_COVERAGE(MEGAHIT.out.assembly_megahit, HOST_REMOVED_FQ)
 			  METASPADES_COVERAGE(METASPADES.out.assembly_metaspades, HOST_REMOVED_FQ)
 			// MAX bin
-				// MAXBIN2(HOST_REMOVED_FQ, MEGAHIT.out.assembly_megahit)
+				MAXBIN2(HOST_REMOVED_FQ, MEGAHIT.out.assembly_megahit)
 			// ZIP CONTIGS
 			// 	ZIP_CONTIG(MEGAHIT.out.assembly_megahit)
 			// // METABAT2
