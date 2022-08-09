@@ -64,7 +64,8 @@ process MAXBIN2 {
 	tuple val(Sample_name), file(Contig)
 
 	output:
- 	path "*"
+	path "*"
+	tuple val(Sample_name), file( "${Sample_name}/*.fasta"), emit: maxbin2_bins
 
 	shell:
 	"""

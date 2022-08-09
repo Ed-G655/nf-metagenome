@@ -275,7 +275,8 @@ include {	METASPADES	} from './modules/local/core/metaspades/main.nf'
 include {	MEGAHIT	} from './modules/local/core/megahit/main.nf'
 include {	METAQUAST } from './modules/local/core/metaQUAST/main.nf'
 include {	METAQUAST	as METAQUAST_METASPADES } from './modules/local/core/metaQUAST/main.nf'  addParams(tool: "METASPADES")
-include {	MAXBIN2 } from './modules/local/core/maxbin2/main.nf'
+include {	MAXBIN2 as MAXBIN2_MEGAHIT} from './modules/local/core/maxbin2/main.nf'
+include {	MAXBIN2 as MAXBIN2_METASPADES} from './modules/local/core/maxbin2/main.nf'
 include {	ZIP_CONTIG } from './modules/local/core/zip_contig/main.nf'
 include {	ASSEMBLY_COVERAGE as MEGAHIT_COVERAGE } from './modules/local/core/assembly_coverage/main.nf'
 include {	ASSEMBLY_COVERAGE as METASPADES_COVERAGE } from './modules/local/core/assembly_coverage/main.nf'
@@ -337,7 +338,8 @@ workflow  {
 				MEGAHIT_COVERAGE(MEGAHIT.out.assembly_megahit, HOST_REMOVED_FQ)
 			  METASPADES_COVERAGE(METASPADES.out.assembly_metaspades, HOST_REMOVED_FQ)
 			//	MAX bin
-				MAXBIN2(HOST_REMOVED_FQ, MEGAHIT.out.assembly_megahit)
+				MAXBIN2_MEGAHIT(HOST_REMOVED_FQ, MEGAHIT.out.assembly_megahit)
+				MAXBIN2_METASPADES(HOST_REMOVED_FQ, METASPADES.out.assembly_metaspades)
 			//	METABAT2
 			  METABAT_MEGAHIT(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
 				METABAT_METASPADES(METASPADES.out.assembly_metaspades, METASPADES_COVERAGE.out)

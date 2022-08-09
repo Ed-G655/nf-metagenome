@@ -64,7 +64,8 @@ process METABAT2 {
 	tuple val(Sample_name), file(BAM)
 
 	output:
- 	path "*"
+	path "*"
+	tuple val(Sample_name), file( "${Contig}*/*.fa"), emit: metabat_bins
 
 	shell:
 	"""
