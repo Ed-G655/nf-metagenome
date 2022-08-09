@@ -65,9 +65,12 @@ process CONCOCT {
 
 	output:
  	path "*"
+	tuple val(Sample_name), file( "${Sample_name}/concoct_${Sample_name}/fasta_bins/*.fa"), emit: concoct_bins
 
 	shell:
 	"""
+	echo "[DEBUG] make sample directory"
+	mkdir ${Sample_name}/ && cd ${Sample_name}
 
 	echo "[DEBUG] Slice contigs into smaller sequences"
 

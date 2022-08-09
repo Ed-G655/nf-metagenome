@@ -68,7 +68,9 @@ process MAXBIN2 {
 
 	shell:
 	"""
-
+	echo "[DEBUG] make sample directory"
+	mkdir ${Sample_name}/ && cd ${Sample_name}
+	
 	echo "[DEBUG] Generate bins from metagenomic samples with MaxBin2 "
 
 	run_MaxBin.pl -contig $Contig \
@@ -78,5 +80,4 @@ process MAXBIN2 {
 								-out $Sample_name
 
 	"""
-
 }
