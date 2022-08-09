@@ -86,8 +86,8 @@ process CONCOCT {
 	mkdir concoct_${Sample_name}/fasta_bins
 
 	"echo [DEBUG] Parse bins into different files"
-	extract_fasta_bins.py $Contig concoct_${Sample_name}/clustering_merged.csv --output_path concoct_${Sample_name}/fasta_bins\
-
+	extract_fasta_bins.py $Contig concoct_${Sample_name}/clustering_merged.csv --output_path concoct_${Sample_name}/fasta_bins
+	
 	"""
 
 }
