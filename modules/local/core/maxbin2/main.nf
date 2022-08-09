@@ -69,6 +69,7 @@ process MAXBIN2 {
 	shell:
 	"""
 	echo "[DEBUG] Generate bins from metagenomic samples with MaxBin2 "
+	mkdir ${Sample_name}/
 
 	run_MaxBin.pl -contig $Contig \
 								-thread $task.cpus \
