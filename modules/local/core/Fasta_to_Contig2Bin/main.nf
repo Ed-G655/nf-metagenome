@@ -62,7 +62,7 @@ process FASTA_TO_CONTING2BIN {
 	tuple val(Sample_name), path(Fasta_bins)
 
 	output:
-	tuple val(Sample_name), file("${Sample_name}${params.tool}/${Sample_name}.${params.binning_tool}.contig2bin.tsv")
+	tuple val(Sample_name), file("${Sample_name}${params.tool}/${Sample_name}${params.binning_tool}.contig2bin.tsv")
 
 	shell:
 	"""
