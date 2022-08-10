@@ -62,14 +62,14 @@ process FASTA_TO_CONTING2BIN {
 	tuple val(Sample_name), path(Fasta_bins)
 
 	output:
-	path "*"
+	tuple val(Sample_name), file("${Sample_name}${params.tool}/${Sample_name}.${params.binning_tool}.contig2bin.tsv")
 
 	shell:
 	"""
 
 	echo "[DEBUG] Converts genome bins in fasta format to scaffolds-to-bin table"
 
-	Fasta_to_Contig2Bin.sh -i $Fasta_bins -e ${params.extension} > ${Sample_name}.${params.tool}.scaffolds2bin.tsv
+	Fasta_to_Contig2Bin.sh -i $Fasta_bins -e ${params.extension} > ${Sample_name}${params.tool}/${Sample_name}.${params.binning_tool}.contig2bin.tsv
 
 	"""
 

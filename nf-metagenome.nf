@@ -271,9 +271,11 @@ include {	BOWTIE2_MAP	} from './modules/local/pre/bowtie2_map/main.nf'
 include {	SAM_TO_BAM	} from './modules/local/pre/SAM_to_BAM/main.nf'
 include {	BAM_TO_FASTQ	} from './modules/local/pre/BAM_to_FASTQ/main.nf'
 								/* CORE-processing */
+	/*======== GENERATE ASSEMBLY ========*/
 include {	METASPADES	} from './modules/local/core/metaspades/main.nf'
 include {	MEGAHIT	} from './modules/local/core/megahit/main.nf'
 include {	METAQUAST } from './modules/local/core/metaQUAST/main.nf'
+	/*======== GENERATE BIN CONTIGS ========*/
 include {	MAXBIN2 as MAXBIN2_MEGAHIT} from './modules/local/core/maxbin2/main.nf'
 include {	MAXBIN2 as MAXBIN2_METASPADES} from './modules/local/core/maxbin2/main.nf'
 include {	ZIP_CONTIG } from './modules/local/core/zip_contig/main.nf'
@@ -283,7 +285,14 @@ include {	METABAT2 as METABAT_MEGAHIT} from './modules/local/core/metabat2/main.
 include {	METABAT2 as METABAT_METASPADES} from './modules/local/core/metabat2/main.nf'
 include { CONCOCT as CONCOCT_MEGAHIT } from './modules/local/core/concoct/main.nf'
 include { CONCOCT as CONCOCT_METASPADES } from './modules/local/core/concoct/main.nf'
-include {FASTA_TO_CONTING2BIN as F_CONTING2BIN_MEGAHIT } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "megahit", extension: "fasta")
+/*======== DASTOOL ========*/
+include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_MAXBIN2_MEGAHIT } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "megahit", extension: "fasta", binning_tool: "maxbin2")
+include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_CONCOT_MEGAHIT } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "megahit", extension: "fasta", binning_tool: "concot")
+include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_METABAT2_MEGAHIT } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "megahit", extension: "fa", binning_tool: "metabat2")
+
+include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_MAXBIN2_METASPADES } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "metaspades", extension: "fasta", binning_tool: "maxbin2")
+include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_CONCOT_METASPADES } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "metaspades", extension: "fasta", binning_tool: "concot")
+include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_METABAT2_METASPADES } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "metaspades", extension: "fa", binning_tool: "metabat2")
 
 
 /*
@@ -323,7 +332,7 @@ workflow  {
 	                                   CORE-PROCESSING
 			================================================================================
 			*/
-												 	/*======== GENERATE ASSEBMBLY ========*/
+												 	/*======== GENERATE ASSEMBLY ========*/
 			// CORE1-METASPADES: Metagenomic assembly using metaSPAdes from SPAdes-3.15.4
  			  METASPADES(HOST_REMOVED_FQ)
 
@@ -352,5 +361,11 @@ workflow  {
 				CONCOCT_METASPADES(METASPADES.out.assembly_metaspades, METASPADES_COVERAGE.out)
 												/*======== BIN REFINEMENT ========*/
 		 // DASTOOL
-		 		F_CONTING2BIN_MEGAHIT(MAXBIN2_MEGAHIT.out.maxbin2_bins)
+		 		//MEGAHIT_ASSEMBLY
+		 		F2CONTING2BIN_MAXBIN2_MEGAHIT(MAXBIN2_MEGAHIT.out.maxbin2_bins)
+				F2CONTING2BIN_CONCOT_MEGAHIT(CONCOCT_MEGAHIT.out.concoct_bins)
+				F2CONTING2BIN_METABAT2_MEGAHIT(METABAT_MEGAHIT.out.metabat_bins)
+				/// JOIN MEGAHIT_BINS
+				MEGAHIT_BINS = F2CONTING2BIN_MAXBIN2_MEGAHIT.out.join(F2CONTING2BIN_CONCOT_MEGAHIT.out).join(F2CONTING2BIN_METABAT2_MEGAHIT.out)
+				MEGAHIT_BINS.view()
 }
