@@ -63,7 +63,7 @@ process DASTOOL {
 	tuple val(Sample_name), file(Contig)
 
 	output:
-	tuple val(Sample_name), file("${Sample_name}${params.tool}/${Sample_name}.${params.binning_tool}.contig2bin.tsv")
+	path "*"
 
 	shell:
 	"""
@@ -74,7 +74,7 @@ process DASTOOL {
 					-c ${Contig} \
 					-t $task.cpus \
 					--write_bins 1 \
-					-o ${Sample_name}${params.tool}/
+					-o ${Sample_name}${params.tool}
 
 	"""
 
