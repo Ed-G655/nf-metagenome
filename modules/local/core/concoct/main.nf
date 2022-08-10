@@ -65,7 +65,7 @@ process CONCOCT {
 
 	output:
  	path "*"
-	tuple val(Sample_name), file( "concoct_${Sample_name}/fasta_bins/*.fa"), emit: concoct_bins
+	tuple val(Sample_name), path( "concoct_${Sample_name}/fasta_bins/"), emit: concoct_bins
 
 	shell:
 	"""

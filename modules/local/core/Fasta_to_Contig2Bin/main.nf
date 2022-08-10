@@ -6,7 +6,7 @@
 
 ================================================================
 
-This module evaluate genome assembly with metaQUAST
+This module perform bowtie2 aligment
 
 ==================================================================
 Version: 0.1
@@ -51,32 +51,27 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 ========================================================================================
 */
 
-/* MAXBIN2 */
+/* FASTA_TO_CONTING2BIN */
 
-process MAXBIN2 {
-	container 'flowcraft/maxbin2:2.2.6-1'
+process FASTA_TO_CONTING2BIN {
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/maxbin2/",mode:"copy"
+	publishDir "${results_dir}/Fasta_to_Contig2Bin/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file( Sample_file)
-	tuple val(Sample_name), file(Contig)
+	tuple val(Sample_name), path(Fasta_bins)
 
 	output:
 	path "*"
-	tuple val(Sample_name), path( "${Sample_name}/"), emit: maxbin2_bins
 
 	shell:
 	"""
-	echo "[DEBUG] Generate bins from metagenomic samples with MaxBin2 "
-	mkdir ${Sample_name}/
 
-	run_MaxBin.pl -contig $Contig \
-								-thread $task.cpus \
-								-reads ${Sample_name}R1.fastq.gz \
-                -reads2 ${Sample_name}R2.fastq.gz \
-								-out ${Sample_name}/$Sample_name
+	echo "[DEBUG] Converts genome bins in fasta format to scaffolds-to-bin table"
+
+	Fasta_to_Scaffolds2Bin.sh -i $Fasta_bins \
+														-e ${params.extension} > $Sample_name/"${params.tool}".scaffolds2bin.tsv
 
 	"""
+
 }
