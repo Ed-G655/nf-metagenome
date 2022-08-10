@@ -65,7 +65,7 @@ process METABAT2 {
 
 	output:
 	path "*"
-	tuple val(Sample_name), path( "${Contig}*.metabat-bins*/*"), emit: metabat_bins
+	tuple val(Sample_name), path( "${Contig}*.metabat-bins*"), emit: metabat_bins
 
 	shell:
 	"""
