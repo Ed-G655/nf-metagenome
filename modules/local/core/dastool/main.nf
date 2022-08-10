@@ -68,7 +68,7 @@ process DASTOOL {
 	shell:
 	"""
 
-	DAS_Tool -t ${task.cpus} --write_bins 1 -i ${TSV_maxbin},${TSV_concoct},${TSV_metabat} -l maxbin,concoct,metabat -c ${Contig} -o ./${Sample_name}${params.tool}
+	DAS_Tool -i ${TSV_maxbin},${TSV_concoct},${TSV_metabat} -l maxbin,concoct,metabat -c ${Contig} -t ${task.cpus} --write_bins 1 -o ./${Sample_name}${params.tool}
 
 	"""
 
