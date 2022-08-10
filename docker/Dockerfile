@@ -83,7 +83,7 @@ RUN tar -xjvf htslib.tar.bz2
 RUN cd htslib-1.3.2 && make && make install
 
 
-# Install metaspades
+# Install Spades
 RUN wget http://cab.spbu.ru/files/release3.15.4/SPAdes-3.15.4-Linux.tar.gz
 RUN tar -xzf SPAdes-3.15.4-Linux.tar.gz
 ENV PATH="/SPAdes-3.15.4-Linux/bin/:${PATH}"
@@ -119,8 +119,47 @@ RUN apt-get update && apt-get install -y \
 #
 # ## Install checkM
 # RUN pip install numpy matplotlib pysam checkm-genome
-#
 # # Download checkM database TO SLOW Download
 # RUN wget --no-check-certificate https://data.ace.uq.edu.au/public/CheckM_databases/checkm_data_2015_01_16.tar.gz
 # RUN  mkdir -p /checkm_database && tar xzf checkm_data_2015_01_16.tar.gz -C /checkm_database
 # RUN echo /checkm_database | checkm data setRoot /
+
+####  Install Dastool
+# Install dependecies
+RUN apt-get install -y --no-install-recommends \
+  libpcre3 \
+  libpcre3-dev \
+  libgsl0-dev \
+  libgomp1 \
+  lzma \
+  ncbi-blast+ \
+  ruby-full
+
+# Prodigal
+RUN cd /tmp && \
+    wget https://github.com/hyattpd/Prodigal/releases/download/v2.6.3/prodigal.linux && \
+    mv prodigal.linux /bin/prodigal && \
+    chmod +x /bin/prodigal
+
+# Pullseq
+RUN cd /tmp && \
+    git clone https://github.com/bcthomas/pullseq.git && \
+    cd pullseq && \
+    ./bootstrap && \
+    ./configure --prefix=/ && \
+    make && \
+    make install && \
+    rm -rf /tmp/pullseq.zip /tmp/pullseq-master
+
+# install R packages
+RUN Rscript -e "install.packages('data.table')"
+RUN Rscript -e "install.packages('magrittr')"
+RUN Rscript -e "install.packages('docopt')"
+
+#Install Dastool
+RUN git clone https://github.com/cmks/DAS_Tool.git
+RUN cd DAS_Tool && unzip db.zip -d db && rm db.zip
+RUN chmod +x DAS_Tool
+ENV PATH="/DAS_Tool/:${PATH}"
+# Add src tools to PATH
+ENV PATH="/DAS_Tool/src:${PATH}"
