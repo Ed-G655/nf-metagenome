@@ -66,9 +66,10 @@ process FASTA_TO_CONTING2BIN {
 
 	shell:
 	"""
+	echo "[DEBUG] Make sample_assembly_tool dir"
+	mkdir ${Sample_name}${params.tool}/
 
 	echo "[DEBUG] Converts genome bins in fasta format to scaffolds-to-bin table"
-
 	Fasta_to_Contig2Bin.sh -i $Fasta_bins -e ${params.extension} > ${Sample_name}${params.tool}/${Sample_name}.${params.binning_tool}.contig2bin.tsv
 
 	"""
