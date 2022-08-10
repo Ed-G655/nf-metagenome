@@ -55,8 +55,8 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 
 process SAM_TO_BAM {
 	tag "$Sample_name"
-	
-	publishDir "${results_dir}/SAM_to_BAM/",mode:"copy"
+
+	publishDir "${intermediates_dir}/SAM_to_BAM/",mode:"symlink"
 	input:
 	tuple val(Sample_name), file( Sample_file)
 

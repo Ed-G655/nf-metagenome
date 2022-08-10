@@ -48,7 +48,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 process TRIMMOMATIC {
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/trimmomatic/",mode:"copy"
+	publishDir "${intermediates_dir}/trimmomatic/",mode:"symlink"
 
 	input:
 	tuple val( Sample_name ), file( SAMPLE )

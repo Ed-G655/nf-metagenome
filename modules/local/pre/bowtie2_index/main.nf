@@ -55,7 +55,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 
 process BOWTIE2_INDEX {
 
-	publishDir "${results_dir}/bowtie2_index/",mode:"copy"
+	publishDir "${intermediates_dir}/bowtie2_index/",mode:"symlink"
 	input:
 	file host_ref
 	file PhiX_ref

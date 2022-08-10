@@ -56,7 +56,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 process BOWTIE2_MAP {
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/bowtie2_bam/",mode:"copy"
+	publishDir "${intermediates_dir}/bowtie2_bam/",mode:"symlink"
 
 	input:
 	tuple val(Sample_name), file( Sample_file)

@@ -57,7 +57,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 process FASTQC {
 	tag "$Sample_id"
 
-	publishDir "${results_dir}/fastqc/",mode:"copy"
+	publishDir "${intermediates_dir}/fastqc/",mode:"symlink"
 
 	input:
 	tuple val( Sample_id ), path( Sample_file )

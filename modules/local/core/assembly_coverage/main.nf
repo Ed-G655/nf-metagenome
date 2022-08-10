@@ -56,13 +56,13 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 process ASSEMBLY_COVERAGE  {
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/assembly_coverage/", mode:"copy"
+	publishDir "${intermediates_dir}/assembly_coverage/", mode:"symlink"
 	input:
 	tuple val(Sample_name), file(Contig)
 	tuple val(Sample_name), file( Sample_file)
 
 	output:
-	tuple val(Sample_name), file("*.{bam,bai}") 
+	tuple val(Sample_name), file("*.{bam,bai}")
 
 	shell:
 
