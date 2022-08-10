@@ -69,7 +69,7 @@ process FASTA_TO_CONTING2BIN {
 
 	echo "[DEBUG] Converts genome bins in fasta format to scaffolds-to-bin table"
 
-	Fasta_to_Contigs2Bin.sh -i $Fasta_bins \
+	Fasta_to_Contig2Bin.sh -i $Fasta_bins \
 														-e ${params.extension} > $Sample_name/"${params.tool}".scaffolds2bin.tsv
 
 	"""
