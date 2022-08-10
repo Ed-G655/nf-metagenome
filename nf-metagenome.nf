@@ -274,7 +274,6 @@ include {	BAM_TO_FASTQ	} from './modules/local/pre/BAM_to_FASTQ/main.nf'
 include {	METASPADES	} from './modules/local/core/metaspades/main.nf'
 include {	MEGAHIT	} from './modules/local/core/megahit/main.nf'
 include {	METAQUAST } from './modules/local/core/metaQUAST/main.nf'
-include {	METAQUAST	as METAQUAST_METASPADES } from './modules/local/core/metaQUAST/main.nf'  addParams(tool: "METASPADES")
 include {	MAXBIN2 as MAXBIN2_MEGAHIT} from './modules/local/core/maxbin2/main.nf'
 include {	MAXBIN2 as MAXBIN2_METASPADES} from './modules/local/core/maxbin2/main.nf'
 include {	ZIP_CONTIG } from './modules/local/core/zip_contig/main.nf'
@@ -284,6 +283,8 @@ include {	METABAT2 as METABAT_MEGAHIT} from './modules/local/core/metabat2/main.
 include {	METABAT2 as METABAT_METASPADES} from './modules/local/core/metabat2/main.nf'
 include { CONCOCT as CONCOCT_MEGAHIT } from './modules/local/core/concoct/main.nf'
 include { CONCOCT as CONCOCT_METASPADES } from './modules/local/core/concoct/main.nf'
+include {FASTA_TO_CONTING2BIN as F_CONTING2BIN_MEGAHIT } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "megahit", extension: "fasta")
+
 
 /*
 ========================================================================================
@@ -322,7 +323,7 @@ workflow  {
 	                                   CORE-PROCESSING
 			================================================================================
 			*/
-
+												 	/*======== GENERATE ASSEBMBLY ========*/
 			// CORE1-METASPADES: Metagenomic assembly using metaSPAdes from SPAdes-3.15.4
  			  METASPADES(HOST_REMOVED_FQ)
 
@@ -334,6 +335,9 @@ workflow  {
 
 			//	CORE3-METAQUAST: evaluate genome assembly with metaQUAST
 			  METAQUAST(ASSEMBLIES)
+
+													/*======== GENERATE BIN CONTIGS ========*/
+
 			//	ASSEMBLY_COVERAGE
 				MEGAHIT_COVERAGE(MEGAHIT.out.assembly_megahit, HOST_REMOVED_FQ)
 			  METASPADES_COVERAGE(METASPADES.out.assembly_metaspades, HOST_REMOVED_FQ)
@@ -346,4 +350,7 @@ workflow  {
 			//	CONCOCT
 				CONCOCT_MEGAHIT(MEGAHIT.out.assembly_megahit, MEGAHIT_COVERAGE.out)
 				CONCOCT_METASPADES(METASPADES.out.assembly_metaspades, METASPADES_COVERAGE.out)
+												/*======== BIN REFINEMENT ========*/
+		 // DASTOOL
+		 		F_CONTING2BIN_MEGAHIT(MAXBIN2_MEGAHIT.out.maxbin2_bins)
 }
