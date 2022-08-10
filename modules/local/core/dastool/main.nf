@@ -74,7 +74,7 @@ process DASTOOL {
 					-c ${Contig} \
 					-t $task.cpus \
 					--write_bins 1 \
-					-o ${Sample_name}${params.tool}\
+					-o ${Sample_name}${params.tool}/
 
 	"""
 
