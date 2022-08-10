@@ -293,7 +293,7 @@ include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_METABAT2_MEGAHIT } from './module
 include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_MAXBIN2_METASPADES } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "metaspades", extension: "fasta", binning_tool: "maxbin2")
 include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_CONCOT_METASPADES } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "metaspades", extension: "fasta", binning_tool: "concot")
 include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_METABAT2_METASPADES } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "metaspades", extension: "fa", binning_tool: "metabat2")
-
+include {DASTOOL as DASTOOL_MEGAHIT} from './modules/local/core/dastool/main.nf' addParams(tool: "megahit")
 
 /*
 ========================================================================================
@@ -367,5 +367,6 @@ workflow  {
 				F2CONTING2BIN_METABAT2_MEGAHIT(METABAT_MEGAHIT.out.metabat_bins)
 				/// JOIN MEGAHIT_BINS
 				MEGAHIT_BINS = F2CONTING2BIN_MAXBIN2_MEGAHIT.out.join(F2CONTING2BIN_CONCOT_MEGAHIT.out).join(F2CONTING2BIN_METABAT2_MEGAHIT.out)
-				MEGAHIT_BINS.view()
+      // DAS_Tool MEGAHIT
+			   DASTOOL_MEGAHIT(MEGAHIT_BINS, MEGAHIT.out.assembly_megahit)
 }
