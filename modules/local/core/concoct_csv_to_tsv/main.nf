@@ -53,41 +53,24 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 
 /* CONCOCT */
 
-process CONCOCT {
-	container 'quay.io/biocontainers/concoct:1.1.0--py38h7be5676_2'
+process CONCOCT_CSV_TO_TSV {
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/concoct/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(Contig)
-	tuple val(Sample_name), file(BAM)
+	tuple val(Sample_name), file(CSV_concoct)
 
 	output:
  	path "*"
-	tuple val(Sample_name), path( "concoct_${Sample_name}/clustering_gt1000.csv"), emit: concoct_bins
+	tuple val(Sample_name), path( "concoct_${Sample_name}/concoct.scaffolds2bin.tsv")
 
 	shell:
 	"""
 
-	echo "[DEBUG] Slice contigs into smaller sequences"
+	echo "[DEBUG] Convert CSV to TSV"
 
-	cut_up_fasta.py $Contig -c 10000 -o 0 --merge_last -b contigs_10K.bed > contigs_10K.fa
-
-	echo "[DEBUG]  Generate coverage depth"
-  concoct_coverage_table.py contigs_10K.bed ${Sample_name}.bam > coverage_table.tsv
-
-	echo "[DEBUG]   Execute CONCOCT"
-	concoct --composition_file contigs_10K.fa --coverage_file coverage_table.tsv -b concoct_${Sample_name}/ -t $task.cpus
-
-	echo "[DEBUG]   Merge sub-contig clustering into original contig clustering"
-	merge_cutup_clustering.py concoct_${Sample_name}/clustering_gt1000.csv > concoct_${Sample_name}/clustering_merged.csv
-
-	echo "[DEBUG]   Create output folder for bins"
-	mkdir concoct_${Sample_name}/fasta_bins
-
-	echo "[DEBUG] Parse bins into different files"
-	extract_fasta_bins.py $Contig concoct_${Sample_name}/clustering_merged.csv --output_path concoct_${Sample_name}/fasta_bins
+	perl -pe "s/,/\tconcoct./g;" concoct_${Sample_name}/clustering_gt1000.csv > concoct_${Sample_name}/concoct.scaffolds2bin.tsv
 
 	"""
 
