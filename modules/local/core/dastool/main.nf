@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* DASTOOL */
 
 process DASTOOL {
+	container 'quay.io/biocontainers/das_tool:1.1.3--r41hdfd78af_0'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/dastool/",mode:"copy"
