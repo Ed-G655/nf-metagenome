@@ -63,7 +63,7 @@ process CONCOCT_CSV_TO_TSV {
 
 	output:
  	path "*"
-	tuple val(Sample_name), path( "concoct_${Sample_name}/concoct.scaffolds2bin.tsv")
+	tuple val(Sample_name), path( "concoct_${Sample_name}/concoct.scaffolds2bin.tsv"), emit: concoct_tsv
 
 	shell:
 	"""
