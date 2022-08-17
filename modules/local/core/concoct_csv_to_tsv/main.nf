@@ -69,7 +69,7 @@ process CONCOCT_CSV_TO_TSV {
 	"""
 
 	echo "[DEBUG] Convert CSV to TSV"
-
+	mkdir concoct_${Sample_name}/
 	perl -pe "s/,/\tconcoct./g;" ${CSV_concoct} > concoct_${Sample_name}/concoct.scaffolds2bin.tsv
 
 	"""
