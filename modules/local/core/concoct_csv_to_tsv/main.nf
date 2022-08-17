@@ -70,7 +70,7 @@ process CONCOCT_CSV_TO_TSV {
 
 	echo "[DEBUG] Convert CSV to TSV"
 
-	perl -pe "s/,/\tconcoct./g;" concoct_${Sample_name}/clustering_gt1000.csv > concoct_${Sample_name}/concoct.scaffolds2bin.tsv
+	perl -pe "s/,/\tconcoct./g;" ${CSV_concoct} > concoct_${Sample_name}/concoct.scaffolds2bin.tsv
 
 	"""
 
