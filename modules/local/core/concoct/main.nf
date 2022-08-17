@@ -65,7 +65,7 @@ process CONCOCT {
 
 	output:
  	path "*"
-	tuple val(Sample_name), path( "concoct_${Sample_name}/fasta_bins/"), emit: concoct_bins
+	tuple val(Sample_name), path( "concoct_${Sample_name}/concoct.scaffolds2bin.tsv"), emit: concoct_bins
 
 	shell:
 	"""
@@ -88,6 +88,8 @@ process CONCOCT {
 
 	echo "[DEBUG] Parse bins into different files"
 	extract_fasta_bins.py $Contig concoct_${Sample_name}/clustering_merged.csv --output_path concoct_${Sample_name}/fasta_bins
+
+	perl -pe "s/,/\tconcoct./g;" concoct_${Sample_name}/clustering_gt1000.csv > concoct_${Sample_name}/concoct.scaffolds2bin.tsv
 
 	"""
 
