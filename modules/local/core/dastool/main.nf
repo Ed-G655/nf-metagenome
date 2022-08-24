@@ -60,7 +60,7 @@ process DASTOOL {
 	publishDir "${results_dir}/dastool/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(TSV_maxbin), file(TSV_metabat)
+	tuple val(Sample_name), file(TSV_maxbin), file(TSV_metabat), file(TSV_concoct)
 	tuple val(Sample_name), file(Contig)
 
 	output:
