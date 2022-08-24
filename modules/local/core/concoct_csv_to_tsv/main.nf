@@ -63,14 +63,14 @@ process CONCOCT_CSV_TO_TSV {
 
 	output:
  	path "*"
-	tuple val(Sample_name), path( "concoct_${Sample_name}/concoct.scaffolds2bin.tsv"), emit: concoct_tsv
+	tuple val(Sample_name), path( "concoct_${Sample_name}/concoct.contig2bin"), emit: concoct_tsv
 
 	shell:
 	"""
 
 	echo "[DEBUG] Convert CSV to TSV"
 	mkdir concoct_${Sample_name}/
-	perl -pe "s/,/\tconcoct./g;" ${CSV_concoct} > concoct_${Sample_name}/concoct.scaffolds2bin.tsv
+	perl -pe "s/,/\tconcoct./g;" ${CSV_concoct} > concoct_${Sample_name}/concoct.contig2bin.tsv
 
 	"""
 
