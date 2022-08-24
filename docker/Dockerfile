@@ -161,5 +161,6 @@ RUN git clone https://github.com/cmks/DAS_Tool.git
 RUN cd DAS_Tool && unzip db.zip -d db && rm db.zip
 RUN chmod +x DAS_Tool
 ENV PATH="/DAS_Tool/:${PATH}"
+
 # Add src tools to PATH
 ENV PATH="/DAS_Tool/src:${PATH}"
