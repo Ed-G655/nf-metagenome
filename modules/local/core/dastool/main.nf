@@ -68,6 +68,7 @@ process DASTOOL {
 
 	shell:
 	"""
+	sed 's/.concoct_part_*//' -i ${TSV_concoct}
 
 	DAS_Tool -i ${TSV_maxbin},${TSV_metabat},${TSV_concoct} -l maxbin,metabat,concoct -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
 
