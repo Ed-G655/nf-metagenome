@@ -292,8 +292,12 @@ include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_METABAT2_MEGAHIT } from './module
 
 include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_MAXBIN2_METASPADES } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "metaspades", extension: "fasta", binning_tool: "maxbin2")
 include {FASTA_TO_CONTING2BIN as F2CONTING2BIN_METABAT2_METASPADES } from './modules/local/core/Fasta_to_Contig2Bin/main.nf'  addParams(tool: "metaspades", extension: "fa", binning_tool: "metabat2")
-include {CONCOCT_CSV_TO_TSV} from './modules/local/core/concoct_csv_to_tsv/main.nf'
+
+include {CONCOCT_CSV_TO_TSV as CONCOCT_CSV_TO_TSV_MEGAHIT} from './modules/local/core/concoct_csv_to_tsv/main.nf'
+include {CONCOCT_CSV_TO_TSV as CONCOCT_CSV_TO_TSV_METASPADES} from './modules/local/core/concoct_csv_to_tsv/main.nf'
+
 include {DASTOOL as DASTOOL_MEGAHIT} from './modules/local/core/dastool/main.nf' addParams(tool: "megahit")
+include {DASTOOL as DASTOOL_METASPADES} from './modules/local/core/dastool/main.nf' addParams(tool: "megahit")
 
 /*
 ========================================================================================
@@ -364,9 +368,19 @@ workflow  {
 		 		//MEGAHIT_ASSEMBLY
 		 		F2CONTING2BIN_MAXBIN2_MEGAHIT(MAXBIN2_MEGAHIT.out.maxbin2_bins)
 				F2CONTING2BIN_METABAT2_MEGAHIT(METABAT_MEGAHIT.out.metabat_bins)
-				CONCOCT_CSV_TO_TSV(CONCOCT_MEGAHIT.out.concoct_csv)
+				CONCOCT_CSV_TO_TSV_MEGAHIT(CONCOCT_MEGAHIT.out.concoct_csv)
 				/// JOIN MEGAHIT_BINS
 				MEGAHIT_BINS = F2CONTING2BIN_MAXBIN2_MEGAHIT.out.join(F2CONTING2BIN_METABAT2_MEGAHIT.out).join(CONCOCT_CSV_TO_TSV.out.concoct_tsv)
 		  // DAS_Tool MEGAHIT
 			  DASTOOL_MEGAHIT(MEGAHIT_BINS, MEGAHIT.out.assembly_megahit)
+
+			// metaSPAdes_ASSEMBLY
+				F2CONTING2BIN_MAXBIN2_METASPADES(MAXBIN2_METASPADES.out.maxbin2_bins)
+				F2CONTING2BIN_METABAT2_METASPADES(METABAT_METASPADES.out.metabat_bins)
+				CONCOCT_CSV_TO_TSV_METASPADES(CONCOCT_METASPADES.out.concoct_csv)
+				/// JOIN  metaSPAdes bins
+				METASPADES_BINS = F2CONTING2BIN_MAXBIN2_METASPADES.out.join(F2CONTING2BIN_METABAT2_METASPADES.out).join(CONCOCT_CSV_TO_TSV.out.concoct_tsv)
+				// DAS_Tool MEGAHIT
+				DASTOOL_METASPADES(METASPADES_BINS, METASPADES.out.assembly_metaspades)
+
 }
