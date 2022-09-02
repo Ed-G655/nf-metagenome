@@ -57,7 +57,7 @@ process CHECKM {
 	container 'quay.io/biocontainers/checkm-genome:1.1.3--py_1'
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/dastool/",mode:"copy"
+	publishDir "${results_dir}/checkm/",mode:"copy"
 
 	input:
 	tuple val(Sample_name), file(Das_tool_bins)
@@ -69,7 +69,7 @@ process CHECKM {
 	"""
 	mkdir checkM_Dastool_${params.tool}/
 	mkdir checkM_Dastool_${params.tool}/${Sample_name}
-	
+
 	echo "[DEBUG]   Run CheckM  standard workflow"
 	checkm lineage_wf -t ${task.cpus} -x fa ${Das_tool_bins} /checkM_Dastool_${params.tool}/${Sample_name} -f ${Sample_name}.txt
 
