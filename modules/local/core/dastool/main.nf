@@ -61,7 +61,7 @@ process DASTOOL {
 
 	input:
 	tuple val(Sample_name), file(TSV_maxbin), file(TSV_metabat), file(TSV_concoct)
-	tuple val(Sample_name), file(Das_tool_bins)
+	tuple val(Sample_name), file(Contig)
 
 	output:
 	tuple val(Sample_name), path("${Sample_name}${params.tool}_DASTool_bins/"), emit: bins_dastool
