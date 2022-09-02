@@ -53,28 +53,22 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 
 /* DASTOOL */
 
-process DASTOOL {
-	container 'quay.io/biocontainers/das_tool:1.1.4--r41hdfd78af_1'
+process CHECKM {
+	container 'quay.io/biocontainers/checkm-genome:1.1.3--py_1'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/dastool/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(TSV_maxbin), file(TSV_metabat), file(TSV_concoct)
-	tuple val(Sample_name), file(Contig)
+	tuple val(Sample_name), file(Das_tool_bins)
 
 	output:
 	path "*"
-	tuple val(Sample_name), path("${Sample_name}${params.tool}/"), emit: bins_dastool
 
 	shell:
 	"""
-	#sed 's/.concoct_part_*//' -i ${TSV_concoct}
-
-	#DAS_Tool -i ${TSV_maxbin},${TSV_metabat},${TSV_concoct} -l maxbin,metabat,concoct -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
-
-	echo "[DEBUG]   Run DAS_tool  for ${TSV_maxbin}, ${TSV_metabat}"
-	DAS_Tool -i ${TSV_maxbin},${TSV_metabat} -l maxbin,metabat -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
+	echo "[DEBUG]   Run CheckM  standard workflow"
+	checkm lineage_wf -t ${task.cpus} -x fa ${Das_tool_bins}  /checkM_Dastool_${params.tool}/${Sample_name} -f ${Sample_name}.txt
 
 	"""
 

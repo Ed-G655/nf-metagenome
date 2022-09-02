@@ -297,7 +297,10 @@ include {CONCOCT_CSV_TO_TSV as CONCOCT_CSV_TO_TSV_MEGAHIT} from './modules/local
 include {CONCOCT_CSV_TO_TSV as CONCOCT_CSV_TO_TSV_METASPADES} from './modules/local/core/concoct_csv_to_tsv/main.nf'
 
 include {DASTOOL as DASTOOL_MEGAHIT} from './modules/local/core/dastool/main.nf' addParams(tool: "megahit")
-include {DASTOOL as DASTOOL_METASPADES} from './modules/local/core/dastool/main.nf' addParams(tool: "megahit")
+include {DASTOOL as DASTOOL_METASPADES} from './modules/local/core/dastool/main.nf' addParams(tool: "metaspades")
+
+include {CHECKM as CHECKM_MEGAHIT } from './modules/local/core/checkm/main.nf' addParams(tool: "megahit")
+include {CHECKM as CHECKM_METASPADES } from './modules/local/core/checkm/main.nf' addParams(tool: "metaspades")
 
 /*
 ========================================================================================
@@ -382,5 +385,6 @@ workflow  {
 				METASPADES_BINS = F2CONTING2BIN_MAXBIN2_METASPADES.out.join(F2CONTING2BIN_METABAT2_METASPADES.out).join(CONCOCT_CSV_TO_TSV_METASPADES.out.concoct_tsv)
 				// DAS_Tool MEGAHIT
 				DASTOOL_METASPADES(METASPADES_BINS, METASPADES.out.assembly_metaspades)
-
+		//	CHECKM MEGAHIT
+		 		CHECKM_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool) 	
 }
