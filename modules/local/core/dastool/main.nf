@@ -65,7 +65,7 @@ process DASTOOL {
 
 	output:
 	path "*"
-	tuple val(Sample_name), path("${Sample_name}${params.tool}"), emit: bins_dastool
+	tuple val(Sample_name), path("${Sample_name}${params.tool}/*"), emit: bins_dastool
 
 	shell:
 	"""
