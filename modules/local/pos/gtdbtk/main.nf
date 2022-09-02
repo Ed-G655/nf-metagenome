@@ -53,27 +53,24 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 
 /* DASTOOL */
 
-process DASTOOL {
-	container 'quay.io/biocontainers/das_tool:1.1.4--r41hdfd78af_1'
+process GTDBTK {
+	container 'quay.io/biocontainers/gtdbtk:1.7.0--pyhdfd78af_0'
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/dastool/",mode:"copy"
+	publishDir "${results_dir}/GTDBTK/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(TSV_maxbin), file(TSV_metabat), file(TSV_concoct)
 	tuple val(Sample_name), file(Das_tool_bins)
 
 	output:
-	tuple val(Sample_name), path("${Sample_name}${params.tool}_DASTool_bins/"), emit: bins_dastool
 	path "*"
 
 	shell:
 	"""
-	echo "[DEBUG]   Run DAS_tool  for ${TSV_maxbin}, ${TSV_metabat}"
-	DAS_Tool -i ${TSV_maxbin},${TSV_metabat} -l maxbin,metabat -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
+	echo "[DEBUG]   Run gtdbtk classify workflow for ${Das_tool_bins}"
+
+	gtdbtk classify_wf --e fa --genome_dir ${Das_tool_bins} --out_dir /${params.tool}${Sample_name} --pplacer_cpus 4 --scratch_dir .
 
 	"""
 
 }
-///	#sed 's/.concoct_part_*//' -i ${TSV_concoct}
-//	#DAS_Tool -i ${TSV_maxbin},${TSV_metabat},${TSV_concoct} -l maxbin,metabat,concoct -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}

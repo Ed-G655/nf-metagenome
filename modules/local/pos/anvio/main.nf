@@ -54,14 +54,13 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* DASTOOL */
 
 process DASTOOL {
-	container 'quay.io/biocontainers/das_tool:1.1.4--r41hdfd78af_1'
+	container 'quay.io/biocontainers/anvio:7--hdfd78af_1'
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/dastool/",mode:"copy"
+	publishDir "${results_dir}/anvio/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(TSV_maxbin), file(TSV_metabat), file(TSV_concoct)
-	tuple val(Sample_name), file(Das_tool_bins)
+	tuple val(Sample_name), file(Contig)
 
 	output:
 	tuple val(Sample_name), path("${Sample_name}${params.tool}_DASTool_bins/"), emit: bins_dastool

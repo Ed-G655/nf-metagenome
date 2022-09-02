@@ -301,6 +301,11 @@ include {DASTOOL as DASTOOL_METASPADES} from './modules/local/core/dastool/main.
 
 include {CHECKM as CHECKM_MEGAHIT } from './modules/local/core/checkm/main.nf' addParams(tool: "megahit")
 include {CHECKM as CHECKM_METASPADES } from './modules/local/core/checkm/main.nf' addParams(tool: "metaspades")
+																		/* pos-processing */
+												/*======== GTDBTK  ========*/
+include {GTDBTK as GTDBTK_METASPADES } from './modules/local/pos/gtdbtk/main.nf' addParams(tool: "metaspades")
+include {GTDBTK as GTDBTK_MEGAHIT } from './modules/local/pos/gtdbtk/main.nf' addParams(tool: "megahit")
+
 
 /*
 ========================================================================================
@@ -390,4 +395,11 @@ workflow  {
 		 		CHECKM_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
 				//CHECKM metaSPAdes
 				CHECKM_METASPADES(DASTOOL_METASPADES.out.bins_dastool)
+/*
+				================================================================================
+		                                   POS-PROCESSING
+				================================================================================
+*/
+				// GTDBTK
+				GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
 }
