@@ -67,7 +67,6 @@ process CHECKM {
 
 	shell:
 	"""
-
 	echo "[DEBUG]   Run CheckM  standard workflow"
 	checkm lineage_wf -t ${task.cpus} -x fa ${Das_tool_bins} checkM_${params.tool}_${Sample_name} -f ${Sample_name}.txt
 

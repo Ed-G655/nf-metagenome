@@ -385,6 +385,9 @@ workflow  {
 				METASPADES_BINS = F2CONTING2BIN_MAXBIN2_METASPADES.out.join(F2CONTING2BIN_METABAT2_METASPADES.out).join(CONCOCT_CSV_TO_TSV_METASPADES.out.concoct_tsv)
 				// DAS_Tool MEGAHIT
 				DASTOOL_METASPADES(METASPADES_BINS, METASPADES.out.assembly_metaspades)
-		//	CHECKM MEGAHIT
-		 		CHECKM_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool) 	
+												/*======== CHECKM  ========*/
+				//CHECKM MEGAHIT
+		 		CHECKM_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
+				//CHECKM metaSPAdes
+				CHECKM_METASPADES(DASTOOL_METASPADES.out.bins_dastool)
 }
