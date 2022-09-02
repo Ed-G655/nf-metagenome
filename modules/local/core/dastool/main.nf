@@ -64,17 +64,16 @@ process DASTOOL {
 	tuple val(Sample_name), file(Contig)
 
 	output:
-	path "*"
 	tuple val(Sample_name), file("${Sample_name}${params.tool}/*.fa"), emit: bins_dastool
+	path "*"
 
 	shell:
 	"""
-	#sed 's/.concoct_part_*//' -i ${TSV_concoct}
-	#DAS_Tool -i ${TSV_maxbin},${TSV_metabat},${TSV_concoct} -l maxbin,metabat,concoct -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
-
 	echo "[DEBUG]   Run DAS_tool  for ${TSV_maxbin}, ${TSV_metabat}"
 	DAS_Tool -i ${TSV_maxbin},${TSV_metabat} -l maxbin,metabat -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
 
 	"""
 
 }
+///	#sed 's/.concoct_part_*//' -i ${TSV_concoct}
+//	#DAS_Tool -i ${TSV_maxbin},${TSV_metabat},${TSV_concoct} -l maxbin,metabat,concoct -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
