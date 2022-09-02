@@ -401,5 +401,5 @@ workflow  {
 				================================================================================
 */
 				// GTDBTK
-				GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
+			//	GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
 }

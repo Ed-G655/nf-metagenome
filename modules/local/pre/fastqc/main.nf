@@ -63,7 +63,7 @@ process FASTQC {
 	tuple val( Sample_id ), path( Sample_file )
 
 	output:
-	tuple val(Sample_id), path("*.zip") , emit: zip
+	tuple val(Sample_id), path("*.zip"), emit: zip
 	path "*"
 
 	shell:

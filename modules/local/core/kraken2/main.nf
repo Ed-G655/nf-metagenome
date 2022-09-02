@@ -51,26 +51,30 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 ========================================================================================
 */
 
-/* DASTOOL */
+/* ASSEMBLY_COVERAGE */
 
-process GTDBTK {
-	container 'quay.io/biocontainers/gtdbtk:1.7.0--pyhdfd78af_0'
+process ASSEMBLY_COVERAGE  {
+	container 'quay.io/biocontainers/kraken2:2.1.2--pl5321h7d875b9_1'
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/GTDBTK/",mode:"copy"
-
+	publishDir "${results_dir}/kraken2/", mode:"copy"
 	input:
-	tuple val(Sample_name), file(Das_tool_bins)
+	tuple val(Sample_name), file( Sample_file)
 
 	output:
-	path "*"
+	tuple val(Sample_name), file("*.{bam,bai}")
 
 	shell:
-	"""
-	echo "[DEBUG]   Run gtdbtk classify workflow for ${Das_tool_bins}"
-
-	gtdbtk classify_wf --e fa --genome_dir ${Das_tool_bins} --out_dir /${params.tool}${Sample_name} --pplacer_cpus 8 --scratch_dir .
 
 	"""
+	echo "Build index from CONTIG: ${Contig}"
+	bowtie2-build ${Contig} final.contigs --threads $task.cpus
 
+	echo "Aligning reads to index and write BAM file"
+	bowtie2 -x final.contigs -1 ${Sample_name}R1.fastq.gz -2 ${Sample_name}R2.fastq.gz | \
+	samtools view -bS -o ${Sample_name}to_sort.bam
+	samtools sort ${Sample_name}to_sort.bam -o ${Sample_name}.bam
+	samtools index ${Sample_name}.bam
+
+	"""
 }
