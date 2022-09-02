@@ -64,7 +64,7 @@ process DASTOOL {
 	tuple val(Sample_name), file(Contig)
 
 	output:
-	tuple val(Sample_name), path("${Sample_name}${params.tool}_DASTool_bins/*.fa"), emit: bins_dastool
+	tuple val(Sample_name), path("${Sample_name}${params.tool}_DASTool_bins/"), emit: bins_dastool
 	path "*"
 
 	shell:
