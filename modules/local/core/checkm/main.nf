@@ -67,8 +67,10 @@ process CHECKM {
 
 	shell:
 	"""
+	mkdir /checkM_Dastool_${params.tool}/${Sample_name}
+	
 	echo "[DEBUG]   Run CheckM  standard workflow"
-	checkm lineage_wf -t ${task.cpus} -x fa ${Das_tool_bins}  /checkM_Dastool_${params.tool}/${Sample_name} -f ${Sample_name}.txt
+	checkm lineage_wf -t ${task.cpus} -x fa ${Das_tool_bins} /checkM_Dastool_${params.tool}/${Sample_name} -f ${Sample_name}.txt
 
 	"""
 
