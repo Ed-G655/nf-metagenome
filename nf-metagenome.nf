@@ -404,6 +404,5 @@ workflow  {
 				// GTDBTK
 			//	GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
 			// PROKKA
-			   PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.dastool_fastas)
-				 DASTOOL_MEGAHIT.out.dastool_fastas.view()
+			   PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
 }
