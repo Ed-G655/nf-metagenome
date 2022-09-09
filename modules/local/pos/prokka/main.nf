@@ -60,16 +60,16 @@ process PROKKA {
 	publishDir "${results_dir}/prokka/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(Das_tool_bins)
+	tuple val(Sample_name), file(dastool_fastas)
 
 	output:
 	path "*"
 
 	shell:
 	"""
-	echo "[DEBUG]   Run prokka for ${Das_tool_bins}"
+	echo "[DEBUG]   Run prokka for ${dastool_fastas}"
 
-	prokka ${Das_tool_bins} --outdir /${params.tool}${Sample_name} --prefix ${Sample_name}
+	prokka ${dastool_fastas} --outdir /${params.tool}${Sample_name} --prefix ${Sample_name}
 
 
 	"""
