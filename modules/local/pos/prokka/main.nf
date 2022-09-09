@@ -68,7 +68,6 @@ process PROKKA {
 	shell:
 	"""
 	echo "[DEBUG]   Run prokka for ${Das_tool_bins}"
-	mkdir ./${params.tool}${Sample_name} 
 	prokka ${Das_tool_bins}/*.fa --outdir ./${params.tool}${Sample_name} --prefix ${Sample_name}
 
 
