@@ -67,7 +67,7 @@ process PROKKA {
 
 	shell:
 	"""
-	echo "[DEBUG]   Run prokka for ${BIN_name}"
+	echo "[DEBUG]   Run prokka for ${Dastool_fasta}"
 	prokka ${Dastool_fasta} --outdir ./${params.tool}${Sample_name} --prefix ${Sample_name}
 
 
