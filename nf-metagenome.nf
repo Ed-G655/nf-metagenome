@@ -407,11 +407,10 @@ workflow  {
 				DASTOOL_METASPADES.out.dastool_fastas.view()
 				DASTOOL_METASPADES.out.bins_list.view()
 				dastools_bins_files = DASTOOL_METASPADES.out.bins_list.splitText().map{it -> it.trim()}
-
+				
 				// Define function to get bin sample_name
-				def get_sample = { file -> file.baseName.replaceAll(/_metaspades_bins.txt/,"").replaceAll(/_megahit_bins.txt/,"")}
+				// def get_sample = { file -> file.baseName.replaceAll(/_metaspades_bins.txt/,"").replaceAll(/_megahit_bins.txt/,"")}
 
 				// PROKKA
-				FASTA_BINS = dastools_bins_files.map{ file -> tuple(get_chrom(file), file) }
 			  PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool, dastools_bins_files)
 }
