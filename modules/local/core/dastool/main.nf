@@ -66,7 +66,7 @@ process DASTOOL {
 	output:
 	tuple val(Sample_name), path("${Sample_name}${params.tool}_DASTool_bins/"), emit: bins_dastool
 	tuple val(Sample_name), path("${Sample_name}${params.tool}_DASTool_bins/*.fa"), emit: dastool_fastas
-	tuple val(Sample_name), path("${Sample_name}${params.tool}_bins.txt"), emit: bins_list
+	file "${Sample_name}${params.tool}_bins.txt", emit: bins_list
 
 	path "*"
 
@@ -76,7 +76,7 @@ process DASTOOL {
 	DAS_Tool -i ${TSV_maxbin},${TSV_metabat} -l maxbin,metabat -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
 
 	echo "[DEBUG] Write bins list"
-	ls | tr " " "\n" > ${Sample_name}${params.tool}_bins.txt
+	ls | tr " " "\n" > ${Sample_name}_${params.tool}_bins.txt
 
 	"""
 
