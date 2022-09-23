@@ -306,6 +306,7 @@ include {CHECKM as CHECKM_METASPADES } from './modules/local/core/checkm/main.nf
 include {GTDBTK as GTDBTK_METASPADES } from './modules/local/pos/gtdbtk/main.nf' addParams(tool: "metaspades")
 include {GTDBTK as GTDBTK_MEGAHIT } from './modules/local/pos/gtdbtk/main.nf' addParams(tool: "megahit")
 include {PROKKA as PROKKA_MEGAHIT } from './modules/local/pos/prokka/main.nf' addParams(tool: "megahit")
+include {PROKKA as PROKKA_METASPADES } from './modules/local/pos/prokka/main.nf' addParams(tool: "metaspades")
 
 
 /*
@@ -402,9 +403,9 @@ workflow  {
 				================================================================================
 */
 				// GTDBTK
-			//	GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
-				DASTOOL_MEGAHIT.out.dastool_fasta.view()
+				//	GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
 
 				// PROKKA
 			  PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.dastool_fasta)
+				PROKKA_METASPADES(DASTOOL_METASPADES.out.dastool_fasta)
 }
