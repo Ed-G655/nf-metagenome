@@ -55,20 +55,21 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 
 process PROKKA {
 	container 'quay.io/biocontainers/prokka:1.14.6--pl5262hdfd78af_1'
-	tag "$Sample_name"
+	tag "$BIN_name"
 
 	publishDir "${results_dir}/prokka/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(Das_tool_bins)
+	tuple val(Sample_name), path(Das_tool_bins)
+ 	val BIN_name
 
 	output:
 	path "*"
 
 	shell:
 	"""
-	echo "[DEBUG]   Run prokka for ${Das_tool_bins}"
-	prokka ${Das_tool_bins}/*.fa --outdir ./${params.tool}${Sample_name} --prefix ${Sample_name}
+	echo "[DEBUG]   Run prokka for ${BIN_name}"
+	prokka ${BIN_name} --outdir ./${params.tool}${Sample_name} --prefix ${Sample_name}
 
 
 	"""
