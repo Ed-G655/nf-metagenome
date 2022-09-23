@@ -55,7 +55,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 
 process PROKKA {
 	container 'quay.io/biocontainers/prokka:1.14.6--pl5262hdfd78af_1'
-	tag "$BIN_name"
+	tag "$Dastool_fasta"
 
 	publishDir "${results_dir}/prokka/",mode:"copy"
 
