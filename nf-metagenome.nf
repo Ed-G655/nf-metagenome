@@ -403,14 +403,8 @@ workflow  {
 */
 				// GTDBTK
 			//	GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
-				DASTOOL_METASPADES.out.bins_dastool.view()
-				DASTOOL_METASPADES.out.dastool_fastas.view()
-				DASTOOL_METASPADES.out.bins_list.view()
-				dastools_bins_files = DASTOOL_METASPADES.out.bins_list.splitText().map{it -> it.trim()}
-				
-				// Define function to get bin sample_name
-				// def get_sample = { file -> file.baseName.replaceAll(/_metaspades_bins.txt/,"").replaceAll(/_megahit_bins.txt/,"")}
+				DASTOOL_MEGAHIT.out.dastool_fasta.view()
 
 				// PROKKA
-			  PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool, dastools_bins_files)
+			  PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.dastool_fasta)
 }
