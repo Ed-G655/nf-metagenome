@@ -76,7 +76,7 @@ process DASTOOL {
 	DAS_Tool -i ${TSV_maxbin},${TSV_metabat} -l maxbin,metabat -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
 
 	echo "[DEBUG] Write bins list"
-	ls | tr " " "\n" > ${Sample_name}_${params.tool}_bins.txt
+	ls ${Sample_name}${params.tool}_DASTool_bins/*.fa | tr " " "\n" > ${Sample_name}_${params.tool}_bins.txt
 
 	"""
 
