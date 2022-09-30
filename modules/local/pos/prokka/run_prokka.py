@@ -31,9 +31,10 @@ files = open(str(file_list), "r").readlines()
 print(file_list)
 
 for file in files:
-    print ("Run prokka at {}".format(file))
+    path = file.replace('\n', '')
+    print ("Run prokka at {}".format(path))
     #Dedine to run prokka
-    prokka = "prokka {} --outdir {}".format(file, outdir)
+    prokka = "prokka ./{} --outdir {}".format(path, outdir)
     print ("The command used was: " + prokka)
     #Pass command to shell
     subprocess.call(prokka, shell=True)
