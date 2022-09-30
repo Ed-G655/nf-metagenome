@@ -65,8 +65,7 @@ process DASTOOL {
 
 	output:
 	tuple val(Sample_name), path("${Sample_name}${params.tool}_DASTool_bins/"), emit: bins_dastool
-	tuple val(Sample_name), path("*_catbins.fa"), emit: dastool_fasta
-
+	tuple val(Sample_name), path("${Sample_name}${params.tool}bins.txt"), emit: bins_txt
 	path "*"
 
 	shell:
@@ -74,8 +73,8 @@ process DASTOOL {
 	echo "[DEBUG]   Run DAS_tool  for ${TSV_maxbin}, ${TSV_metabat}"
 	DAS_Tool -i ${TSV_maxbin},${TSV_metabat} -l maxbin,metabat -c ${Contig} -t ${task.cpus} --write_bins -o ${Sample_name}${params.tool}
 
-	echo "[DEBUG] Cat bins"
-	cat ${Sample_name}${params.tool}_DASTool_bins/*.fa > ${Sample_name}${params.tool}_catbins.fa
+	echo "[DEBUG] Write bins list"
+	ls *.fa ${Sample_name}${params.tool}_DASTool_bins/ | tr " " "\n" > ${Sample_name}${params.tool}bins.txt
 
 	"""
 

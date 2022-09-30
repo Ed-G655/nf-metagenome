@@ -397,6 +397,7 @@ workflow  {
 		 		CHECKM_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
 				//CHECKM metaSPAdes
 				CHECKM_METASPADES(DASTOOL_METASPADES.out.bins_dastool)
+				/// EVALUAR SALIDA DE CHECKM
 /*
 				================================================================================
 		                                   POS-PROCESSING
@@ -405,6 +406,8 @@ workflow  {
 				// GTDBTK
 				//	GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
 
+
+				// EJECUTAR POR BIN
 				// PROKKA
 			  PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.dastool_fasta)
 				PROKKA_METASPADES(DASTOOL_METASPADES.out.dastool_fasta)
