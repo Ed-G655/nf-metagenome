@@ -36,7 +36,7 @@ for file in files:
     out = outdir + "_" + str(prefix[1])
     print ("Run prokka at {}".format(path))
     #Dedine to run prokka
-    prokka = "prokka ./{} --outdir {} --prefix {}".format(path, outdir, prefix[1])
+    prokka = "prokka ./{} --outdir {} --prefix {}".format(path, out, prefix[1])
     print ("The command used was: " + prokka)
     #Pass command to shell
     subprocess.call(prokka, shell=True)
