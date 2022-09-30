@@ -70,7 +70,7 @@ process PROKKA {
 	shell:
 	"""
 	echo "[DEBUG]   Run prokka for ${Dastool_fasta}"
-	python run_prokka.py ${BIN_txt} "./${params.tool}${Sample_name}" 
+	python run_prokka.py ${BIN_txt} "./${Sample_name}${params.tool}"
 
 
 	"""

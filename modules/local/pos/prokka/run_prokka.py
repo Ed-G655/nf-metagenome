@@ -32,10 +32,10 @@ print(file_list)
 
 for file in files:
     path = file.replace('\n', '')
-    prefix = file.replace('\n', '').replace('.fa', '')
+    prefix = file.replace('\n', '').replace('.fa', '_prokka').split('/')
     print ("Run prokka at {}".format(path))
     #Dedine to run prokka
-    prokka = "prokka ./{} --outdir {} --prefix {}".format(path, outdir, prefix)
+    prokka = "prokka ./{} --outdir {} --prefix {}".format(path, outdir, prefix[1])
     print ("The command used was: " + prokka)
     #Pass command to shell
     subprocess.call(prokka, shell=True)
