@@ -30,10 +30,10 @@ files = open(str(file_list), "r").readlines()
 
 print(file_list)
 
-for file_list in files:
-    print ("Run prokka at {}".format(file_list))
+for file in files:
+    print ("Run prokka at {}".format(file))
     #Dedine to run prokka
-    prokka = "prokka {} --outdir {}".format(ID, outdir)
+    prokka = "prokka {} --outdir {}".format(file, outdir)
     print ("The command used was: " + prokka)
     #Pass command to shell
     subprocess.call(prokka, shell=True)

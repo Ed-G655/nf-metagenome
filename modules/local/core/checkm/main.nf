@@ -70,6 +70,10 @@ process CHECKM {
 	echo "[DEBUG]   Run CheckM  standard workflow"
 	checkm lineage_wf -t ${task.cpus} -x fa ${Das_tool_bins} checkM_${params.tool}_${Sample_name} -f ${Sample_name}.txt
 
+	echo "[DEBUG]   Run CheckM  resume"
+	cd  checkM_${params.tool}_${Sample_name}
+	checkm qa lineage.ms . -o 2 -f qa
+
 	"""
 
 }
