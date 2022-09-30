@@ -32,8 +32,8 @@ print(file_list)
 
 for file in files:
     path = file.replace('\n', '')
-    out = outdir + "_" + prefix
     prefix = file.replace('\n', '').replace('.fa', '_prokka').split('/')
+    out = outdir + "_" + prefix
     print ("Run prokka at {}".format(path))
     #Dedine to run prokka
     prokka = "prokka ./{} --outdir {} --prefix {}".format(path, outdir, prefix[1])
