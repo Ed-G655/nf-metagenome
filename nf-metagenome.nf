@@ -258,6 +258,19 @@ Channel
 
 /*
 ========================================================================================
+	    IMPORT LOCAL mk MODULES
+========================================================================================
+*/
+/* _pre1_fastqc_before */
+/* Read mkfile module files */
+Channel
+	.fromPath("${workflow.projectDir}/modules/local/pos/prokka/run_prokka.py")
+	.toList()
+	.set{ prokka_script }
+
+
+/*
+========================================================================================
     IMPORT LOCAL MODULES/SUBWORKFLOWS
 ========================================================================================
 */
@@ -409,6 +422,6 @@ workflow  {
 
 				// EJECUTAR POR BIN
 				// PROKKA
-			//  PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.dastool_fasta)
-			//	PROKKA_METASPADES(DASTOOL_METASPADES.out.dastool_fasta)
+			 PROKKA_MEGAHIT(DASTOOL_METASPADES.out.bins_dastool, DASTOOL_MEGAHIT.out.bins_txt, prokka_script)
+			 PROKKA_METASPADES(DASTOOL_METASPADES.out.bins_dastool ,DASTOOL_METASPADES.out.bins_txt, prokka_script)
 }

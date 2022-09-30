@@ -61,6 +61,8 @@ process PROKKA {
 
 	input:
 	tuple val(Sample_name), path(Dastool_fasta)
+	tuple val(Sample_name), path(BIN_txt)
+	file prokka_script
 
 	output:
 	path "*"
@@ -68,7 +70,7 @@ process PROKKA {
 	shell:
 	"""
 	echo "[DEBUG]   Run prokka for ${Dastool_fasta}"
-	prokka ${Dastool_fasta} --outdir ./${params.tool}${Sample_name} --prefix ${Sample_name}
+	python run_prokka.py ${BIN_txt} "./${params.tool}${Sample_name}"
 
 
 	"""
