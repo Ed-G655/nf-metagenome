@@ -409,6 +409,6 @@ workflow  {
 
 				// EJECUTAR POR BIN
 				// PROKKA
-			  PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.dastool_fasta)
-				PROKKA_METASPADES(DASTOOL_METASPADES.out.dastool_fasta)
+			//  PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.dastool_fasta)
+			//	PROKKA_METASPADES(DASTOOL_METASPADES.out.dastool_fasta)
 }
