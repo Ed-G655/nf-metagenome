@@ -61,9 +61,9 @@ process CHECKM {
 
 	input:
 	tuple val(Sample_name), file(Das_tool_bins)
-	tuple val(Sample_name), file("checkM_${params.tool}_${Sample_name}/qa_${params.tool}_${Sample_name}"), emit: qa
 
 	output:
+	tuple val(Sample_name), file("checkM_${params.tool}_${Sample_name}/qa_${params.tool}_${Sample_name}"), emit: qa
 	path "*"
 
 	shell:
