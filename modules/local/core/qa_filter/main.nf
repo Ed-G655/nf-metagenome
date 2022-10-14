@@ -51,29 +51,27 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 ========================================================================================
 */
 
-/* DASTOOL */
+/* QA_FILTER */
 
-process CHECKM {
-	container 'quay.io/biocontainers/checkm-genome:1.1.3--py_1'
+process QA_FILTER {
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/checkm/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(Das_tool_bins)
-	tuple val(Sample_name), file("checkM_${params.tool}_${Sample_name}/qa_${params.tool}_${Sample_name}"), emit: qa
+	tuple val(Sample_name), file(QA)
 
 	output:
+	tuple val(Sample_name), file("bins_high.txt"), emit: high_bins
 	path "*"
 
 	shell:
 	"""
-	echo "[DEBUG]   Run CheckM  standard workflow"
-	checkm lineage_wf -t ${task.cpus} -x fa ${Das_tool_bins} checkM_${params.tool}_${Sample_name} -f ${Sample_name}.txt
+	echo "[DEBUG]  Change qa to tsv"
+	less -S ${QA} | tr -d "#-"  | sed 's/\w \w/\w_\w/g' | sed 's/ (/_/g'| tr -s " " | tr " " "\t" | cut -f2,7,8 | awk '$2>80 && $3>10' > qa_list.tsv
 
-	echo "[DEBUG]   Run CheckM  resume"
-	cd  checkM_${params.tool}_${Sample_name}
-	checkm qa lineage.ms . -o 2 -f qa_${params.tool}_${Sample_name}
+	echo "[DEBUG]  Filter high QA"
+	sed -e "1d" qa_list.tsv  | cut -f1 > bins_high.txt
 
 	"""
 
