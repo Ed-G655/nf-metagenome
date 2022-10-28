@@ -164,3 +164,8 @@ ENV PATH="/DAS_Tool/:${PATH}"
 
 # Add src tools to PATH
 ENV PATH="/DAS_Tool/src:${PATH}"
+
+# Install samtools requirements
+RUN apt-get install -y --no-install-recommends \
+    awk \
+    sed
