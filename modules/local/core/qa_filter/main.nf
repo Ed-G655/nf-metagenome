@@ -68,7 +68,7 @@ process QA_FILTER {
 	shell:
 	"""
 	echo "[DEBUG]  Change qa to tsv"
-	less -S ${QA} | tr -d "#-"  | sed "s/\\w \\w/\\w_\\w/g" | sed "s/ (/_/g"| tr -s " " | tr " " "\t" | cut -f2,7,8 | awk '\$2>80 && \$3>10' > qa_list.tsv
+	less -S ${QA} | tr -d "#-"  | sed "s/\\w \\w/\\w_\\w/g" | sed "s/ (/_/g"| tr -s " " | tr " " "\t" | cut -f2,7,8 | awk '$2>80 && $3>10' > qa_list.tsv
 
 	echo "[DEBUG]  Filter high QA"
 	sed -e "1d" qa_list.tsv  | cut -f1 > bins_high.txt
