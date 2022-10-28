@@ -166,4 +166,6 @@ ENV PATH="/DAS_Tool/:${PATH}"
 ENV PATH="/DAS_Tool/src:${PATH}"
 
 # Install samtools requirements
-RUN apt-get install -y --no-install-recommends gawk
+RUN apt-get install -y --no-install-recommends \
+  gawk \
+  less 
