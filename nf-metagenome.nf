@@ -425,6 +425,6 @@ workflow  {
 
 				// EJECUTAR POR BIN
 				// PROKKA
-			 PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool, DASTOOL_MEGAHIT.out.bins_txt, prokka_script)
-			 PROKKA_METASPADES(DASTOOL_METASPADES.out.bins_dastool ,DASTOOL_METASPADES.out.bins_txt, prokka_script)
+		//	 PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool, DASTOOL_MEGAHIT.out.bins_txt, prokka_script)
+			 PROKKA_METASPADES(DASTOOL_METASPADES.out.bins_dastool , QA_FILTER_METASPADES.out.high_bins, prokka_script)
 }
