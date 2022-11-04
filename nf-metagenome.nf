@@ -241,18 +241,7 @@ Channel
 	 	.fromPath("${params.PhiX}")
 		.toList()
 	 	.set{PhiX_ref}
-
-/* Load QUALITY BINS PARAMS*/
-Channel
-			.from("${params.min_completeness}")
-			.toList()
-			 .set{completeness}
-
-Channel
-			 .from("${params.max_contamination}")
-			 .toList()
-			 .set{contamination}
-
+		
 /*
 ========================================================================================
 	    IMPORT LOCAL mk MODULES
