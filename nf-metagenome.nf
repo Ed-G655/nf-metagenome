@@ -242,7 +242,16 @@ Channel
 		.toList()
 	 	.set{PhiX_ref}
 
+/* Load QUALITY BINS PARAMS*/
+Channel
+			.fromPath("${params.min_completeness}")
+			.toList()
+			 .set{completeness}
 
+Channel
+			 .fromPath("${params.max_contamination}")
+			 .toList()
+			 .set{contamination}
 
 /*
 ========================================================================================
@@ -314,7 +323,7 @@ include {DASTOOL as DASTOOL_METASPADES} from './modules/local/core/dastool/main.
 
 include {CHECKM as CHECKM_MEGAHIT } from './modules/local/core/checkm/main.nf' addParams(tool: "megahit")
 include {CHECKM as CHECKM_METASPADES } from './modules/local/core/checkm/main.nf' addParams(tool: "metaspades")
-include {QA_FILTER as QA_FILTER_METASPADES } from './modules/local/core/qa_filter/main.nf'
+include {QA_FILTER as QA_FILTER_METASPADES } from './modules/local/core/qa_filter/main.nf' addParams(tool: "metaspades")
 
 																		/* pos-processing */
 												/*======== GTDBTK  ========*/
@@ -413,7 +422,7 @@ workflow  {
 				//CHECKM metaSPAdes
 				CHECKM_METASPADES(DASTOOL_METASPADES.out.bins_dastool)
 				/// EVALUAR SALIDA DE CHECKM
-				QA_FILTER_METASPADES(CHECKM_METASPADES.out.qa)
+				QA_FILTER_METASPADES(CHECKM_METASPADES.out.qa, completeness, contamination)
 /*
 				================================================================================
 		                                   POS-PROCESSING
