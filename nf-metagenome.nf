@@ -323,7 +323,8 @@ include {DASTOOL as DASTOOL_METASPADES} from './modules/local/core/dastool/main.
 
 include {CHECKM as CHECKM_MEGAHIT } from './modules/local/core/checkm/main.nf' addParams(tool: "megahit")
 include {CHECKM as CHECKM_METASPADES } from './modules/local/core/checkm/main.nf' addParams(tool: "metaspades")
-include {QA_FILTER as QA_FILTER_METASPADES } from './modules/local/core/qa_filter/main.nf' addParams(tool: "metaspades")
+include {QA_FILTER_HQ as QA_FILTER_HQ_METASPADES } from './modules/local/core/qa_filter_hq/main.nf' addParams(tool: "metaspades", quality: high_quality)
+include {QA_FILTER_MQ as QA_FILTER_MQ_METASPADES } from './modules/local/core/qa_filter_mq/main.nf' addParams(tool: "metaspades", quality: medium_quality)
 
 																		/* pos-processing */
 												/*======== GTDBTK  ========*/
@@ -422,7 +423,14 @@ workflow  {
 				//CHECKM metaSPAdes
 				CHECKM_METASPADES(DASTOOL_METASPADES.out.bins_dastool)
 				/// EVALUAR SALIDA DE CHECKM
-				QA_FILTER_METASPADES(CHECKM_METASPADES.out.qa, params.min_completeness, params.max_contamination)
+				if (params.medium_quality_bins) {
+					QA_FILTER_MQ_METASPADES(CHECKM_METASPADES.out.qa, params.min_completeness_mq, params.max_contamination_mq)
+					FILTERED_BINS = QA_FILTER_MQ_METASPADES.out.filtered_bins
+				}
+				else {
+					QA_FILTER_HQ_METASPADES(CHECKM_METASPADES.out.qa, params.min_completeness_hq, params.max_contamination_hq)
+					FILTERED_BINS = QA_FILTER_HQ_METASPADES.out.filtered_bins
+}
 /*
 				================================================================================
 		                                   POS-PROCESSING
@@ -435,5 +443,5 @@ workflow  {
 				// EJECUTAR POR BIN
 				// PROKKA
 		//	 PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool, DASTOOL_MEGAHIT.out.bins_txt, prokka_script)
-			 PROKKA_METASPADES(DASTOOL_METASPADES.out.bins_dastool , QA_FILTER_METASPADES.out.filtered_bins, prokka_script)
+			 PROKKA_METASPADES(DASTOOL_METASPADES.out.bins_dastool , FILTERED_BINS.out, prokka_script)
 }
