@@ -68,7 +68,7 @@ process QA_FILTER {
 
 	"""
 	echo "[DEBUG]  Change qa to tsv"
-	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if(\$2 >= $Min_completeness && \$3 <= $Max_contamination) { print } }' > $Sample_name$params.quality'.txt'
+	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if(\$2 >= $Min_completeness && \$3 <= $Max_contamination) { print } }' > $Sample_name$params.quality'.tsv'
 
 	echo "[DEBUG]  Filter high QA"
 	less -S $Sample_name$params.quality'.tsv'  | cut -f1 > $Sample_name$params.quality'.txt'
