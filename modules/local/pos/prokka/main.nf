@@ -71,7 +71,7 @@ process PROKKA {
 	"""
 	echo "[DEBUG]   Run prokka for ${Dastool_fasta}"
 	cd *bins
-	python run_prokka.py ${BIN_txt} "./${Sample_name}"
+	python run_prokka.py ${BIN_txt} ${Dastool_fasta} "./${Sample_name}"
 
 
 	"""
