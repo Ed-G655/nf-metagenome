@@ -312,13 +312,19 @@ include {DASTOOL as DASTOOL_METASPADES} from './modules/local/core/dastool/main.
 
 include {CHECKM as CHECKM_MEGAHIT } from './modules/local/core/checkm/main.nf' addParams(tool: "megahit")
 include {CHECKM as CHECKM_METASPADES } from './modules/local/core/checkm/main.nf' addParams(tool: "metaspades")
+
+include {QA_FILTER as QA_FILTER_HQ_MEGAHIT } from './modules/local/core/qa_filter/main.nf' addParams(tool: "megahit", quality: "high_quality")
 include {QA_FILTER as QA_FILTER_HQ_METASPADES } from './modules/local/core/qa_filter/main.nf' addParams(tool: "metaspades", quality: "high_quality")
+
+
+include {QA_FILTER as QA_FILTER_MQ_MEGAHIT } from './modules/local/core/qa_filter/main.nf' addParams(tool: "megahit", quality: "medium_quality")
 include {QA_FILTER as QA_FILTER_MQ_METASPADES } from './modules/local/core/qa_filter/main.nf' addParams(tool: "metaspades", quality: "medium_quality")
 
 																		/* pos-processing */
 												/*======== GTDBTK  ========*/
 include {GTDBTK as GTDBTK_METASPADES } from './modules/local/pos/gtdbtk/main.nf' addParams(tool: "metaspades")
 include {GTDBTK as GTDBTK_MEGAHIT } from './modules/local/pos/gtdbtk/main.nf' addParams(tool: "megahit")
+
 include {PROKKA as PROKKA_MEGAHIT } from './modules/local/pos/prokka/main.nf' addParams(tool: "megahit")
 include {PROKKA as PROKKA_METASPADES } from './modules/local/pos/prokka/main.nf' addParams(tool: "metaspades")
 
@@ -414,13 +420,20 @@ workflow  {
 				/// EVALUAR SALIDA DE CHECKM
 			     //medium quality bins
 				QA_FILTER_MQ_METASPADES(CHECKM_METASPADES.out.qa, params.min_completeness_mq, params.max_contamination_mq)
+				QA_FILTER_MQ_MEGAHIT(CHECKM_MEGAHIT.out.qa, params.min_completeness_mq, params.max_contamination_mq)
+
 					//high quality bins
 				QA_FILTER_HQ_METASPADES(CHECKM_METASPADES.out.qa, params.min_completeness_hq, params.max_contamination_hq)
+				QA_FILTER_HQ_MEGAHIT(CHECKM_MEGAHIT.out.qa, params.min_completeness_hq, params.max_contamination_hq)
+
 				if (params.medium_quality_bins) {
-					FILTERED_BINS = QA_FILTER_MQ_METASPADES.out.filtered_bins
+					FILTERED_BINS_METASPADES = QA_FILTER_MQ_METASPADES.out.filtered_bins
+					FILTERED_BINS_MEGAHIT = QA_FILTER_MQ_MEGAHIT.out.filtered_bins
 				}
 				else {
-					FILTERED_BINS = QA_FILTER_HQ_METASPADES.out.filtered_bins
+					FILTERED_BINS_METASPADES = QA_FILTER_HQ_METASPADES.out.filtered_bins
+					FILTERED_BINS_MEGAHIT = QA_FILTER_HQ_MEGAHIT.out.filtered_bins
+
 }
 /*
 				================================================================================
@@ -434,5 +447,6 @@ workflow  {
 				// EJECUTAR POR BIN
 				// PROKKA
 		//	 PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool, DASTOOL_MEGAHIT.out.bins_txt, prokka_script)
-			 PROKKA_METASPADES(DASTOOL_METASPADES.out.bins_dastool , FILTERED_BINS , prokka_script)
+			 PROKKA_METASPADES(DASTOOL_METASPADES.out.bins_dastool , FILTERED_BINS_METASPADES , prokka_script)
+			 PROKKA_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool , FILTERED_BINS_MEGAHIT , prokka_script)
 }
