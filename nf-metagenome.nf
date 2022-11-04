@@ -244,12 +244,12 @@ Channel
 
 /* Load QUALITY BINS PARAMS*/
 Channel
-			.fromPath("${params.min_completeness}")
+			.from("${params.min_completeness}")
 			.toList()
 			 .set{completeness}
 
 Channel
-			 .fromPath("${params.max_contamination}")
+			 .from("${params.max_contamination}")
 			 .toList()
 			 .set{contamination}
 
@@ -422,7 +422,7 @@ workflow  {
 				//CHECKM metaSPAdes
 				CHECKM_METASPADES(DASTOOL_METASPADES.out.bins_dastool)
 				/// EVALUAR SALIDA DE CHECKM
-				QA_FILTER_METASPADES(CHECKM_METASPADES.out.qa, completeness, contamination)
+				QA_FILTER_METASPADES(CHECKM_METASPADES.out.qa, params.min_completeness, params.max_contamination)
 /*
 				================================================================================
 		                                   POS-PROCESSING
