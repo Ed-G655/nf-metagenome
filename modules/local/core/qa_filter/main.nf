@@ -71,7 +71,7 @@ process QA_FILTER {
 	sed -i "1 s/.*/Bin_id\tCompleteness\tContamination/" $Sample_name'_filtered_bins.tsv'
 
 	echo "[DEBUG]  Filter high QA"
-	sed -e "1d" qa_list.tsv  | cut -f1 > filtered_bins.txt
+	sed -e "1d" $Sample_name'_filtered_bins.tsv'  | cut -f1 > filtered_bins.txt
 
 	"""
 
