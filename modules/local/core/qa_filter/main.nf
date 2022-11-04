@@ -71,7 +71,7 @@ process QA_FILTER {
 	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if(\$2 >= 80 && \$3 <= 20) { print } }' > $Sample_name'_filtered_bins.tsv'
 
 	echo "[DEBUG]  Filter high QA"
-	sed -e "1d" $Sample_name'_filtered_bins.tsv'  | cut -f1 > $Sample_name'_filtered_bins.txt'
+	less -S $Sample_name'_filtered_bins.tsv'  | cut -f1 > $Sample_name'_filtered_bins.txt'
 
 	"""
 
