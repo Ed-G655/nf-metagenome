@@ -60,18 +60,15 @@ process QA_FILTER {
 
 	input:
 	tuple val(Sample_name), file(QA)
-	val MIN_Completeness
-	val MAX_Contamination
-
+	val Max_completeness
+	val Max_contamination
 	output:
 	tuple val(Sample_name), file("*.txt"), emit: filtered_bins
 	path "*.tsv"
 
 	"""
-	echo $MIN_Completeness
-	echo $MAX_Contamination
 	echo "[DEBUG]  Change qa to tsv"
-	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk '\$2>$MIN_Completeness && \$3<$MAX_Contamination' > $Sample_name'_filtered_bins.tsv'
+	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk '\$2>80 && \$3<20' > $Sample_name'_filtered_bins.tsv'
 	sed -i "1 s/.*/Bin_id\tCompleteness\tContamination/" $Sample_name'_filtered_bins.tsv'
 
 	echo "[DEBUG]  Filter high QA"
