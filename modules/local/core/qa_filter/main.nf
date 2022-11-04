@@ -62,15 +62,16 @@ process QA_FILTER {
 	tuple val(Sample_name), file(QA)
 
 	output:
-	tuple val(Sample_name), file("bins_high.txt"), emit: high_bins
-	path "*"
+	tuple val(Sample_name), file("*.txt"), emit: filtered_bins
+	path "*.tsv"
 
 	"""
 	echo "[DEBUG]  Change qa to tsv"
-	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk '\$2>80 && \$3>10' > qa_list.tsv
+	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk '\$2>80 && \$3>10' > $Sample_name'_filtered_bins.tsv'
+	sed -i "1 s/.*/Bin_id\tCompleteness\tContamination/" $Sample_name'_filtered_bins.tsv'
 
 	echo "[DEBUG]  Filter high QA"
-	sed -e "1d" qa_list.tsv  | cut -f1 > bins_high.txt
+	sed -e "1d" qa_list.tsv  | cut -f1 > filtered_bins.txt
 
 	"""
 
