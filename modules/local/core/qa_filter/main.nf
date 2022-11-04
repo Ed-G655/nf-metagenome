@@ -68,7 +68,7 @@ process QA_FILTER {
 
 	"""
 	echo "[DEBUG]  Change qa to tsv"
-	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if((\$2 >= 80) && (\$3 >= 15)) { print } }' > $Sample_name'_filtered_bins.tsv'
+	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if((\$2 >= 80) && (\$3 <= 15)) { print } }' > $Sample_name'_filtered_bins.tsv'
 	sed -i "1 s/.*/Bin_id\tCompleteness\tContamination/" $Sample_name'_filtered_bins.tsv'
 
 	echo "[DEBUG]  Filter high QA"
