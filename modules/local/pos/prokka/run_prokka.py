@@ -34,8 +34,8 @@ print(file_list)
 for file in files:
     path = file.replace('\n', '.fa')
     path_dir = str(fasta_dir) + "/" + path
-    prefix = fasta_dir + '_prokka'
-    out = outdir + "_" + str(prefix)
+    prefix = fasta_dir.replace('_DASTool_bins', '_prokka')
+    out = outdir
     print ("Run prokka at {}".format(path_dir))
     #Dedine to run prokka
     prokka = "prokka ./{} --outdir {} --prefix {}".format(path_dir, out, prefix)

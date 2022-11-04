@@ -57,7 +57,7 @@ process PROKKA {
 	container 'quay.io/biocontainers/prokka:1.14.6--pl5262hdfd78af_1'
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/prokka/${Sample_name}${params.tool}", mode:"copy"
+	publishDir "${results_dir}/prokka/", mode:"copy"
 
 	input:
 	tuple val(Sample_name), path(Dastool_fasta)
