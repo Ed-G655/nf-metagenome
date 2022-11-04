@@ -68,6 +68,8 @@ process QA_FILTER {
 	path "*.tsv"
 
 	"""
+	echo $MIN_Completeness
+	echo $MAX_Contamination
 	echo "[DEBUG]  Change qa to tsv"
 	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk '\$2>$MIN_Completeness && \$3<$MAX_Contamination' > $Sample_name'_filtered_bins.tsv'
 	sed -i "1 s/.*/Bin_id\tCompleteness\tContamination/" $Sample_name'_filtered_bins.tsv'
