@@ -241,7 +241,7 @@ Channel
 	 	.fromPath("${params.PhiX}")
 		.toList()
 	 	.set{PhiX_ref}
-		
+
 /*
 ========================================================================================
 	    IMPORT LOCAL mk MODULES
@@ -312,8 +312,8 @@ include {DASTOOL as DASTOOL_METASPADES} from './modules/local/core/dastool/main.
 
 include {CHECKM as CHECKM_MEGAHIT } from './modules/local/core/checkm/main.nf' addParams(tool: "megahit")
 include {CHECKM as CHECKM_METASPADES } from './modules/local/core/checkm/main.nf' addParams(tool: "metaspades")
-include {QA_FILTER_HQ as QA_FILTER_HQ_METASPADES } from './modules/local/core/qa_filter_hq/main.nf' addParams(tool: "metaspades", quality: high_quality)
-include {QA_FILTER_MQ as QA_FILTER_MQ_METASPADES } from './modules/local/core/qa_filter_mq/main.nf' addParams(tool: "metaspades", quality: medium_quality)
+include {QA_FILTER_HQ as QA_FILTER_HQ_METASPADES } from './modules/local/core/qa_filter_hq/main.nf' addParams(tool: "metaspades", quality: "high_quality")
+include {QA_FILTER_MQ as QA_FILTER_MQ_METASPADES } from './modules/local/core/qa_filter_mq/main.nf' addParams(tool: "metaspades", quality: "medium_quality")
 
 																		/* pos-processing */
 												/*======== GTDBTK  ========*/
