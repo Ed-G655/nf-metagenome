@@ -53,7 +53,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 
 /* QA_FILTER */
 
-process QA_FILTER_HQ {
+process QA_FILTER {
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/QA/${params.quality}",mode:"copy"
@@ -68,10 +68,10 @@ process QA_FILTER_HQ {
 
 	"""
 	echo "[DEBUG]  Change qa to tsv"
-	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if(\$2 >= $Min_completeness && \$3 <= $Max_contamination) { print } }' > $Sample_name'_filtered_bins.tsv'
+	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if(\$2 >= $Min_completeness && \$3 <= $Max_contamination) { print } }' > $Sample_name'_'$params.quality'.tsv'
 
 	echo "[DEBUG]  Filter high QA"
-	less -S $Sample_name'_filtered_bins.tsv'  | cut -f1 > $Sample_name'_filtered_bins.txt'
+	less -S $Sample_name'_'$params.quality'.tsv'  | cut -f1 > $Sample_name'_'$params.quality'.txt'
 
 	"""
 
