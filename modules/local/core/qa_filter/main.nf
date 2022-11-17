@@ -67,7 +67,7 @@ process QA_FILTER {
 
 	output:
 	tuple val(Sample_name), file("*.txt"), emit: filtered_bins
-	tuple val(Sample_name), path("${params.quality}_bins"), emit: fasta_bins
+	tuple val(Sample_name), path("${params.quality}_bins/*"), emit: fasta_bins
 	path "*.tsv"
 
 	"""

@@ -34,7 +34,7 @@ print(file_list)
 for file in files:
     path = file.replace('\n', '.fa')
     path_dir = str(fasta_dir) + "/" + path
-    out = outdir + path
+    out = outdir + "/" + path
     print ("Make simbolyc link at {}".format(path_dir))
     #Dedine to run prokka
     ln = "ln -s ./{} {} ".format(path_dir, out)
