@@ -78,8 +78,8 @@ process QA_FILTER {
 	less -S $Sample_name$params.quality'.tsv'  | cut -f1 > $Sample_name$params.quality'.txt'
 
 	echo "[DEBUG]   Filter bins files ${Dastool_fasta}"
-	mkdir $params.quality_bins'_bins'
-	python filter_files_bins.py $Sample_name$params.quality'.txt' ${Dastool_fasta} './$params.quality_bins''_bins'
+	mkdir $params.quality'.bins'
+	python filter_files_bins.py $Sample_name$params.quality'.txt' ${Dastool_fasta} $params.quality'_bins'
 
 	"""
 
