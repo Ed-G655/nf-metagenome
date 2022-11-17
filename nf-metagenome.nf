@@ -256,15 +256,20 @@ Channel
 
 /*
 ========================================================================================
-	    IMPORT LOCAL mk MODULES
+	    IMPORT python script
 ========================================================================================
 */
-/* _pre1_fastqc_before */
-/* Read mkfile module files */
+/* Read files */
 Channel
 	.fromPath("${workflow.projectDir}/modules/local/pos/prokka/run_prokka.py")
 	.toList()
 	.set{ prokka_script }
+
+	/* Read files */
+	Channel
+		.fromPath("${workflow.projectDir}/modules/local/core/qa_filter/filter_files_bins.py")
+		.toList()
+		.set{ filter_bins }
 
 
 /*
@@ -419,12 +424,12 @@ workflow  {
 				CHECKM_METASPADES(DASTOOL_METASPADES.out.bins_dastool)
 				/// EVALUAR SALIDA DE CHECKM
 			     //medium quality bins
-				QA_FILTER_MQ_METASPADES(CHECKM_METASPADES.out.qa, params.min_completeness_mq, params.max_contamination_mq)
-				QA_FILTER_MQ_MEGAHIT(CHECKM_MEGAHIT.out.qa, params.min_completeness_mq, params.max_contamination_mq)
+				QA_FILTER_MQ_METASPADES(CHECKM_METASPADES.out.qa, DASTOOL_METASPADES.out.bins_dastool, params.min_completeness_mq, params.max_contamination_mq, filter_bins)
+				QA_FILTER_MQ_MEGAHIT(CHECKM_MEGAHIT.out.qa, DASTOOL_MEGAHIT.out.bins_dastool, params.min_completeness_mq, params.max_contamination_mq, filter_bins)
 
 					//high quality bins
-				QA_FILTER_HQ_METASPADES(CHECKM_METASPADES.out.qa, params.min_completeness_hq, params.max_contamination_hq)
-				QA_FILTER_HQ_MEGAHIT(CHECKM_MEGAHIT.out.qa, params.min_completeness_hq, params.max_contamination_hq)
+				QA_FILTER_HQ_METASPADES(CHECKM_METASPADES.out.qa, DASTOOL_METASPADES.out.bins_dastool, params.min_completeness_hq, params.max_contamination_hq, filter_bins)
+				QA_FILTER_HQ_MEGAHIT(CHECKM_MEGAHIT.out.qa, DASTOOL_MEGAHIT.out.bins_dastool, params.min_completeness_hq, params.max_contamination_hq, filter_bins)
 
 				if (params.medium_quality_bins) {
 					FILTERED_BINS_METASPADES = QA_FILTER_MQ_METASPADES.out.filtered_bins
@@ -433,7 +438,6 @@ workflow  {
 				else {
 					FILTERED_BINS_METASPADES = QA_FILTER_HQ_METASPADES.out.filtered_bins
 					FILTERED_BINS_MEGAHIT = QA_FILTER_HQ_MEGAHIT.out.filtered_bins
-
 }
 /*
 				================================================================================
@@ -442,7 +446,6 @@ workflow  {
 */
 				// GTDBTK
 				//	GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
-
 
 				// EJECUTAR POR BIN
 				// PROKKA

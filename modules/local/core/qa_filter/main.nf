@@ -60,10 +60,14 @@ process QA_FILTER {
 
 	input:
 	tuple val(Sample_name), file(QA)
+	tuple val(Sample_name), path(Dastool_fasta)
 	val Min_completeness
 	val Max_contamination
+	file filter_script
+
 	output:
 	tuple val(Sample_name), file("*.txt"), emit: filtered_bins
+	tuple val(Sample_name), path("*/*_bins/"), emit: fasta_bins
 	path "*.tsv"
 
 	"""
@@ -72,6 +76,10 @@ process QA_FILTER {
 
 	echo "[DEBUG]  Filter high QA"
 	less -S $Sample_name$params.quality'.tsv'  | cut -f1 > $Sample_name$params.quality'.txt'
+
+	echo "[DEBUG]   Filter bins files ${Dastool_fasta}"
+	mkdir $params.quality_bins'_bins'
+	python filter_files_bins.py $Sample_name$params.quality'.txt' ${Dastool_fasta} './$params.quality_bins''_bins'
 
 	"""
 
