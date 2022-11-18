@@ -4,11 +4,10 @@ FROM rocker/tidyverse
 ################## METADATA ######################
 LABEL base_image="rocker/tidyverse"
 LABEL version="0.1"
-LABEL software="TO DO"
+LABEL software="nf-metagenome"
 LABEL software.version="0.1"
-LABEL about.summary="TO DO"
-LABEL about.home="TO DO"
-LABEL about.documentation="TO DO"
+LABEL about.summary=" Nextflow pipeline to analyse metagenome data "
+LABEL about.documentation="https://github.com/Ed-G655/nf-metagenome"
 LABEL about.tags="Metagenomics"
 
 ################## MAINTAINER ######################
@@ -66,6 +65,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     liblzma-dev \
     libcurl4-gnutls-dev \
     libssl-dev \
+    bzip2 \
     libncurses5-dev
 
 # Install samtools
@@ -100,7 +100,6 @@ ENV PATH="/MEGAHIT-1.2.9-Linux-x86_64-static/bin/:${PATH}"
 RUN apt-get update && apt-get install -y \
   libboost-all-dev\
   gzip \
-  bzip2 \
   build-essential \
   python-setuptools \
   libstdc++6 \
@@ -126,46 +125,45 @@ RUN apt-get update && apt-get install -y \
 
 ####  Install Dastool
 # Install dependecies
-RUN apt-get install -y --no-install-recommends \
-  libpcre3 \
-  libpcre3-dev \
-  libgsl0-dev \
-  libgomp1 \
-  lzma \
-  ncbi-blast+ \
-  ruby-full
-
-# Prodigal
-RUN cd /tmp && \
-    wget https://github.com/hyattpd/Prodigal/releases/download/v2.6.3/prodigal.linux && \
-    mv prodigal.linux /bin/prodigal && \
-    chmod +x /bin/prodigal
-
-# Pullseq
-RUN cd /tmp && \
-    git clone https://github.com/bcthomas/pullseq.git && \
-    cd pullseq && \
-    ./bootstrap && \
-    ./configure --prefix=/ && \
-    make && \
-    make install && \
-    rm -rf /tmp/pullseq.zip /tmp/pullseq-master
-
-# install R packages
-RUN Rscript -e "install.packages('data.table')"
-RUN Rscript -e "install.packages('magrittr')"
-RUN Rscript -e "install.packages('docopt')"
-
-#Install Dastool
-RUN git clone https://github.com/cmks/DAS_Tool.git
-RUN cd DAS_Tool && unzip db.zip -d db && rm db.zip
-RUN chmod +x DAS_Tool
-ENV PATH="/DAS_Tool/:${PATH}"
-
-# Add src tools to PATH
-ENV PATH="/DAS_Tool/src:${PATH}"
+# RUN apt-get install -y --no-install-recommends \
+#   libpcre3 \
+#   libpcre3-dev \
+#   libgsl0-dev \
+#   libgomp1 \
+#   lzma \
+#   ncbi-blast+ \
+#   ruby-full
+#
+# # Prodigal
+# RUN cd /tmp && \
+#     wget https://github.com/hyattpd/Prodigal/releases/download/v2.6.3/prodigal.linux && \
+#     mv prodigal.linux /bin/prodigal && \
+#     chmod +x /bin/prodigal
+#
+# # Pullseq
+# RUN cd /tmp && \
+#     git clone https://github.com/bcthomas/pullseq.git && \
+#     cd pullseq && \
+#     ./bootstrap && \
+#     ./configure --prefix=/ && \
+#     make && \
+#     make install && \
+#     rm -rf /tmp/pullseq.zip /tmp/pullseq-master
+#
+# # install R packages
+# RUN Rscript -e "install.packages('data.table')"
+# RUN Rscript -e "install.packages('magrittr')"
+# RUN Rscript -e "install.packages('docopt')"
+#
+# #Install Dastool
+# RUN git clone https://github.com/cmks/DAS_Tool.git
+# RUN cd DAS_Tool && unzip db.zip -d db && rm db.zip
+# RUN chmod +x DAS_Tool
+# ENV PATH="/DAS_Tool/:${PATH}"
+#
+# # Add src tools to PATH
+# ENV PATH="/DAS_Tool/src:${PATH}"
 
 # Install samtools requirements
 RUN apt-get install -y --no-install-recommends \
-  gawk \
   less

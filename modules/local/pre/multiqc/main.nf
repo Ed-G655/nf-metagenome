@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* PRE4_MULTIQC */
 
 process MULTIQC {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_id"
 
 	publishDir "${results_dir}/multiqc_report/",mode:"copy"

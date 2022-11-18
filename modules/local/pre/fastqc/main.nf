@@ -55,6 +55,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* PRE1_FASTQC */
 
 process FASTQC {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_id"
 
 	publishDir "${intermediates_dir}/fastqc/",mode:"symlink"

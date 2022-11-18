@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* QA_FILTER */
 
 process QA_FILTER {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/QA/${params.quality}", mode:"symlink"

@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* SAM_to_BAM */
 
 process SAM_TO_BAM {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
 
 	publishDir "${intermediates_dir}/SAM_to_BAM/",mode:"symlink"

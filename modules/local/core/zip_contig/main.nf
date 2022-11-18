@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* MEGAHIT */
 
 process ZIP_CONTIG {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/megahit/",mode:"copy"

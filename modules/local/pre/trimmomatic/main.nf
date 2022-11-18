@@ -46,6 +46,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* PRE1_FASTQC */
 
 process TRIMMOMATIC {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
 
 	publishDir "${intermediates_dir}/trimmomatic/",mode:"symlink"

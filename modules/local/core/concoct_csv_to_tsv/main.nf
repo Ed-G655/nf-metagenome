@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* CONCOCT */
 
 process CONCOCT_CSV_TO_TSV {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/concoct/",mode:"copy"

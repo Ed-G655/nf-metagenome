@@ -54,8 +54,8 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* PRE3_BOWTIE2 */
 
 process BOWTIE2_MAP {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
-
 	publishDir "${intermediates_dir}/bowtie2_bam/",mode:"symlink"
 
 	input:

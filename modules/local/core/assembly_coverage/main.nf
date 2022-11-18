@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* ASSEMBLY_COVERAGE */
 
 process ASSEMBLY_COVERAGE  {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
 
 	publishDir "${intermediates_dir}/assembly_coverage/", mode:"symlink"

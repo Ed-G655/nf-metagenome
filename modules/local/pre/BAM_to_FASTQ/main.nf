@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* BAM_TO_FASTQ */
 
 process BAM_TO_FASTQ {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
 
 	publishDir "${intermediates_dir}/BAM_to_FASTQ/",mode:"symlink"

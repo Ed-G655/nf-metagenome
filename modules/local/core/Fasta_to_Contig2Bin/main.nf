@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* FASTA_TO_CONTING2BIN */
 
 process FASTA_TO_CONTING2BIN {
+	container 'edugarcia156/nf-metagenome'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/Fasta_to_Contig2Bin/",mode:"copy"
