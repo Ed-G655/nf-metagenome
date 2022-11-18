@@ -60,7 +60,7 @@ process GTDBTK {
 	publishDir "${results_dir}/GTDBTK/",mode:"copy"
 
 	input:
-	tuple val(Sample_name), file(Das_tool_bins)
+	tuple val(Sample_name), path(Das_tool_bins)
 
 	output:
 	path "*"

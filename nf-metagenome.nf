@@ -433,11 +433,17 @@ workflow  {
 
 				if (params.medium_quality_bins) {
 					FILTERED_BINS_METASPADES = QA_FILTER_MQ_METASPADES.out.filtered_bins
+					FASTA_BINS_METASPADES = QA_FILTER_MQ_METASPADES.out.fasta_bins
+
 					FILTERED_BINS_MEGAHIT = QA_FILTER_MQ_MEGAHIT.out.filtered_bins
+					FASTA_BINS_MEGAHIT = QA_FILTER_MQ_MEGAHIT.out.fasta_bins
 				}
 				else {
 					FILTERED_BINS_METASPADES = QA_FILTER_HQ_METASPADES.out.filtered_bins
+					FASTA_BINS_METASPADES = QA_FILTER_HQ_METASPADES.out.fasta_bins
+
 					FILTERED_BINS_MEGAHIT = QA_FILTER_HQ_MEGAHIT.out.filtered_bins
+					FASTA_BINS_METASPADES = QA_FILTER_HQ_MEGAHIT.out.fasta_bins
 }
 /*
 				================================================================================
@@ -445,7 +451,8 @@ workflow  {
 				================================================================================
 */
 				// GTDBTK
-				//	GTDBTK_MEGAHIT(DASTOOL_MEGAHIT.out.bins_dastool)
+				GTDBTK_MEGAHIT(FASTA_BINS_MEGAHIT)
+				GTDBTK_METASPADES(FASTA_BINS_METASPADES)
 
 				// EJECUTAR POR BIN
 				// PROKKA
