@@ -57,7 +57,7 @@ process DASTOOL {
 	container 'quay.io/biocontainers/das_tool:1.1.4--r41hdfd78af_1'
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/dastool/",mode:"copy"
+	publishDir "${results_dir}/dastool/",mode:"symlink"
 
 	input:
 	tuple val(Sample_name), file(TSV_maxbin), file(TSV_metabat), file(TSV_concoct)

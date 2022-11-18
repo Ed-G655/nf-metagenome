@@ -56,7 +56,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 process QA_FILTER {
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/QA/${params.quality}",mode:"copy"
+	publishDir "${results_dir}/QA/${params.quality}", mode:"copy"
 
 	input:
 	tuple val(Sample_name), file(QA)
@@ -67,7 +67,7 @@ process QA_FILTER {
 
 	output:
 	tuple val(Sample_name), file("*.txt"), emit: filtered_bins
-	tuple val(Sample_name), path("${params.quality}_bins/*"), emit: fasta_bins
+	tuple val(Sample_name), path("${params.tool}_${params.quality}_bins/*"), emit: fasta_bins
 	path "*.tsv"
 
 	"""
@@ -78,8 +78,8 @@ process QA_FILTER {
 	less -S $Sample_name$params.quality'.tsv'  | cut -f1 > $Sample_name$params.quality'.txt'
 
 	echo "[DEBUG]   Filter bins files ${Dastool_fasta}"
-	mkdir $params.quality'_bins'
-	python filter_files_bins.py $Sample_name$params.quality'.txt' ${Dastool_fasta} $params.quality'_bins'
+	mkdir $params.tool'_'$params.quality'_bins'
+	python filter_files_bins.py $params.tool'_'$Sample_name$params.quality'.txt' ${Dastool_fasta} $params.tool'_'$params.quality'_bins'
 
 	"""
 
