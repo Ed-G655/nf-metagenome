@@ -54,7 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* MAXBIN2 */
 
 process MAXBIN2 {
-	container 'flowcraft/maxbin2:2.2.6-1'
+	container 'quay.io/biocontainers/maxbin2:2.2.7--h1b792b2_3'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/maxbin2/",mode:"copy"
