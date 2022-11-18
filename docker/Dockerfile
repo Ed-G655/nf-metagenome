@@ -164,6 +164,6 @@ RUN apt-get update && apt-get install -y \
 # # Add src tools to PATH
 # ENV PATH="/DAS_Tool/src:${PATH}"
 
-# Install samtools requirements
+# Install requirements
 RUN apt-get install -y --no-install-recommends \
   less
