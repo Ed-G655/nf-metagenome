@@ -54,7 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* MAXBIN2 */
 
 process MAXBIN2 {
-	container 'docker pull pegi3s/maxbin2'
+	container 'pegi3s/maxbin2'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/maxbin2/",mode:"copy"
