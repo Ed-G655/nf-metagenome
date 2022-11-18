@@ -54,7 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* METASPADES */
 
 process METASPADES {
-	container 'edugarcia156/nf-metagenome'
+	container 'staphb/spades'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/metaspades/",mode:"copy"
