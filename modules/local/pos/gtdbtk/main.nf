@@ -54,7 +54,6 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* DASTOOL */
 
 process GTDBTK {
-	container 'quay.io/biocontainers/gtdbtk:1.7.0--pyhdfd78af_0'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/GTDBTK/",mode:"copy"

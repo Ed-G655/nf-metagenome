@@ -56,7 +56,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 process QA_FILTER {
 	tag "$Sample_name"
 
-	publishDir "${results_dir}/QA/${params.quality}", mode:"copy"
+	publishDir "${results_dir}/QA/${params.quality}", mode:"symlink"
 
 	input:
 	tuple val(Sample_name), file(QA)
