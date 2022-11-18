@@ -72,10 +72,10 @@ process QA_FILTER {
 
 	"""
 	echo "[DEBUG]  Change qa to tsv"
-	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if(\$2 >= $Min_completeness && \$3 <= $Max_contamination) { print } }' > $Sample_name$params.quality'.tsv'
+	less -S $QA | tr -d "#-"  | tr -s " " | tr " " "\t" | cut -f2,8,9 | awk -F "\t" '{ if(\$2 >= $Min_completeness && \$3 <= $Max_contamination) { print } }' > $params.tool'_'$Sample_name$params.quality'.tsv'
 
 	echo "[DEBUG]  Filter high QA"
-	less -S $Sample_name$params.quality'.tsv'  | cut -f1 > $Sample_name$params.quality'.txt'
+	less -S $params.tool'_'$Sample_name$params.quality'.tsv'  | cut -f1 > $params.tool'_'$Sample_name$params.quality'.txt'
 
 	echo "[DEBUG]   Filter bins files ${Dastool_fasta}"
 	mkdir $params.tool'_'$params.quality'_bins'
