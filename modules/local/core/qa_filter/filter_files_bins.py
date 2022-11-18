@@ -37,7 +37,7 @@ for file in files:
     out = outdir + "/" + path
     print ("Make simbolyc link at {}".format(path_dir))
     #Dedine to run prokka
-    ln = "ln -s ./{} ./{} ".format(path_dir, out)
+    ln = "cp ./{} ./{} ".format(path_dir, out)
     print ("The command used was: " + ln)
     #Pass command to shell
     subprocess.call(ln, shell=True)
