@@ -54,6 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* MAXBIN2 */
 
 process MAXBIN2 {
+	container 'cabanaonline/maxbin2:1.0'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/maxbin2/",mode:"copy"
