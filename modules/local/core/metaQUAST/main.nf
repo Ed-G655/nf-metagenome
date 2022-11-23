@@ -54,7 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* METAQUAST */
 
 process METAQUAST {
-	container 'quay.io/biocontainers/quast:3.2'
+	container 'nanozoo/quast'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/metaQUAST/",mode:"copy"
