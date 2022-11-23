@@ -54,7 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* DASTOOL */
 
 process GTDBTK {
-	conda "bioconda::gtdbtk=2.1.1"
+	conda "/bodega/programs/anaconda3/envs/gtdbtk"
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/GTDBTK/",mode:"copy"
