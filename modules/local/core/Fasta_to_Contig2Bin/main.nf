@@ -54,7 +54,7 @@ intermediates_dir = "${params.output_dir}/${pipeline_name}-intermediate/"
 /* FASTA_TO_CONTING2BIN */
 
 process FASTA_TO_CONTING2BIN {
-	container 'edugarcia156/nf-metagenome'
+	container 'quay.io/biocontainers/das_tool:1.1.4--r41hdfd78af_1'
 	tag "$Sample_name"
 
 	publishDir "${results_dir}/Fasta_to_Contig2Bin/",mode:"copy"
